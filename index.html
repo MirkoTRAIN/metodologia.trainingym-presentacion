@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Las 4 palancas del negocio fitness · Trainingym</title>
+  <meta name="description" content="Las 4 palancas que hacen crecer un negocio fitness: Captación, Ahorro de tiempo, Fidelización e Ingresos.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --orange: #ED6845;
+      --grafito: #1D1D1B;
+      --petrol: #293138;
+      --gris: #F2F3F7;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Host Grotesk', system-ui, sans-serif;
+      background: #0e0e0c;
+      color: #fff;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ─── Top bar ─── */
+    .topbar {
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .topbar img { height: 26px; width: auto; }
+    .topbar a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar a:hover { color: var(--orange); }
+
+    /* ─── Hero ─── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 68px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin: 0;
+    }
+    .hero h1 strong { color: var(--orange); font-weight: 800; }
+
+    /* ─── Selector de palanca (botones arriba) ─── */
+    .palanca-tabs {
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+    .palanca-tab {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.72);
+      padding: 1rem 1rem;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+    .palanca-tab:hover {
+      background: rgba(237,104,69,0.10);
+      border-color: rgba(237,104,69,0.45);
+      color: #fff;
+    }
+    .palanca-tab.on {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(237,104,69,0.32);
+    }
+    .palanca-tab-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    @media (max-width: 760px) {
+      .palanca-tabs {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #0e0e0c;
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .palanca-tab {
+        padding: 0.7rem 0.5rem;
+        font-size: 12.5px;
+      }
+      .palanca-tab-name { font-size: 12.5px; }
+    }
+    @media (max-width: 480px) {
+      .palanca-tabs {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+      }
+      .palanca-tab {
+        padding: 0.6rem 0.4rem;
+      }
+      .palanca-tab-name { font-size: 12px; }
+    }
+
+    /* ─── Contenedor principal con las 4 palancas en línea ─── */
+    .palancas-row {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+    .palancas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      transition: grid-template-columns 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Modos zoom: una palanca grande, otras pequeñas */
+    .palancas-grid.zoom-cap   { grid-template-columns: 4fr 1fr 1fr 1fr; }
+    .palancas-grid.zoom-tiem  { grid-template-columns: 1fr 4fr 1fr 1fr; }
+    .palancas-grid.zoom-fid   { grid-template-columns: 1fr 1fr 4fr 1fr; }
+    .palancas-grid.zoom-ing   { grid-template-columns: 1fr 1fr 1fr 4fr; }
+    @media (max-width: 1100px) {
+      .palancas-grid,
+      .palancas-grid.zoom-cap,
+      .palancas-grid.zoom-tiem,
+      .palancas-grid.zoom-fid,
+      .palancas-grid.zoom-ing {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      /* En móvil/tablet, TODAS las palancas se muestran expandidas (no hay modo compacto) */
+      .palancas-grid[class*="zoom-"] .palanca-col:not(.active) {
+        opacity: 1;
+      }
+      .palanca-col:not(.active) .cap-h-line { display: block; }
+      .palanca-col:not(.active) .cap-tl-wrap { padding: 0 32px; }
+      .palanca-col:not(.active) .cap-timeline {
+        flex-direction: column;
+        min-height: 0;
+        gap: 0;
+      }
+      .palanca-col:not(.active) .cap-item {
+        padding: 16px 18px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        flex: none;
+      }
+      .palanca-col:not(.active) .cap-item:hover {
+        flex: none;
+        background: rgba(237,104,69,0.05);
+      }
+      .palanca-col:not(.active) .cap-kicker {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .palanca-col:not(.active) .cap-sep {
+        display: block;
+        width: 24px;
+        margin: 9px 0;
+      }
+      .palanca-col:not(.active) .cap-headline {
+        display: block;
+        max-height: none;
+        opacity: 1;
+        transform: none;
+        font-size: 12.5px;
+        margin-bottom: 5px;
+      }
+      .palanca-col:not(.active) .cap-desc {
+        display: block;
+        max-height: none;
+        opacity: 1;
+        font-size: 11px;
+      }
+      .palanca-col:not(.active) .cap-hint {
+        display: flex;
+        opacity: 1;
+        margin-top: 9px;
+      }
+      .palanca-col:not(.active) .cap-ft {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .palanca-col:not(.active) .palanca-zoom-hint { display: none; }
+      .palanca-col:not(.active) .palanca-mini-stat { display: none; }
+      .palanca-col:not(.active) .cap-embed::after { display: block; }
+    }
+    /* Móvil estricto: cap-ft más legible */
+    @media (max-width: 760px) {
+      .cap-ft {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 14px 16px;
+      }
+      .cap-ft-arrow { margin: 0 6px; font-size: 10px; }
+      .cap-ft-label { font-size: 9.5px; letter-spacing: 1.2px; }
+      .cap-ft-eq { margin: 0 8px; }
+      .cap-ft-goal { padding: 6px 12px; }
+      .cap-ft-num { font-size: 16px; }
+      .cap-tl-wrap { padding: 0 16px !important; }
+      .cap-h-line { display: none; }
+      .cap-item { padding: 14px 4px !important; }
+    }
+
+    /* ─── Cada palanca ─── */
+    .palanca-col {
+      background: #1D1D1B;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+    /* En modo "zoom-X" las que NO son la activa se atenúan */
+    .palancas-grid[class*="zoom-"] .palanca-col:not(.active) {
+      opacity: 0.52;
+    }
+    .palancas-grid[class*="zoom-"] .palanca-col:not(.active):hover {
+      opacity: 0.85;
+    }
+    .palanca-col.active { cursor: default; }
+
+    /* Cabecera de cada palanca */
+    .palanca-head {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: rgba(0,0,0,0.18);
+    }
+    .palanca-head-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #fff;
+      text-transform: none;
+    }
+    .palanca-head-num {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+    .palanca-col.active .palanca-head-name { color: var(--orange); }
+
+    /* Contenido — modo COMPACTO (no zoom) */
+    .palanca-body {
+      position: relative;
+      transition: opacity 0.3s ease;
+    }
+    .palanca-col:not(.active) .cap-embed-inner {
+      padding: 0.8rem 0.85rem;
+    }
+    .palanca-col:not(.active) .cap-h-line { display: none; }
+    .palanca-col:not(.active) .cap-tl-wrap { padding: 0; }
+    .palanca-col:not(.active) .cap-timeline {
+      flex-direction: column;
+      min-height: 0;
+      gap: 0;
+    }
+    .palanca-col:not(.active) .cap-item {
+      padding: 0.55rem 0;
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      flex: none;
+    }
+    .palanca-col:not(.active) .cap-item:last-child { border-bottom: none; }
+    .palanca-col:not(.active) .cap-item:hover { flex: none; background: transparent; }
+    .palanca-col:not(.active) .cap-kicker {
+      font-size: 11.5px;
+      line-height: 1.35;
+    }
+    .palanca-col:not(.active) .cap-sep,
+    .palanca-col:not(.active) .cap-headline,
+    .palanca-col:not(.active) .cap-desc,
+    .palanca-col:not(.active) .cap-hint,
+    .palanca-col:not(.active) .cap-ft {
+      display: none;
+    }
+    .palanca-col:not(.active) .cap-embed::after { display: none; }
+
+    /* Hint para palancas no expandidas */
+    .palanca-col:not(.active) .palanca-zoom-hint {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(237,104,69,0.15);
+      text-align: center;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .palanca-col:not(.active):hover .palanca-zoom-hint { opacity: 1; }
+    .palanca-col.active .palanca-zoom-hint { display: none; }
+
+    /* Footer info para vista compacta */
+    .palanca-mini-stat {
+      display: none;
+      padding: 0.55rem 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(237,104,69,0.05);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--orange);
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .palanca-col:not(.active) .palanca-mini-stat { display: block; }
+
+    /* Wrapper para la versión expandida — usa el CSS original .cap-* */
+    .palanca-col.active .cap-embed {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .cap-embed {
+      font-family:'Host Grotesk',system-ui,sans-serif;
+      background:#1D1D1B;
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      position:relative;
+    }
+    .cap-embed::after {
+      content:''; position:absolute; inset:0;
+      background-image:radial-gradient(rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size:44px 44px; pointer-events:none; z-index:0;
+    }
+
+    /* header */
+    .cap-hd {
+      display:flex; align-items:center; justify-content:center;
+      padding:14px 32px; border-bottom:1px solid rgba(255,255,255,.04);
+      position:relative; z-index:2;
+    }
+    .cap-hd-title {
+      font-size:11px; font-weight:600; color:rgba(255,255,255,.6);
+      letter-spacing:5px; text-transform:uppercase;
+    }
+    .cap-hd-title span { color:#ED6845; }
+
+    /* timeline wrapper */
+    .cap-tl-wrap {
+      position:relative; z-index:2;
+      padding:0 32px;
+    }
+    .cap-h-line {
+      width:100%; height:2px;
+      background:linear-gradient(90deg, transparent 0%, #ED6845 6%, #ED6845 94%, transparent 100%);
+      position:relative; flex-shrink:0; margin:0;
+    }
+    .cap-h-line::before, .cap-h-line::after {
+      content:''; position:absolute;
+      width:10px; height:10px;
+      background:#1D1D1B; border:2px solid #ED6845;
+      border-radius:50%; top:50%; transform:translateY(-50%);
+    }
+    .cap-h-line::before { left:calc(12.5% - 5px); }
+    .cap-h-line::after  { right:calc(12.5% - 5px); }
+    .cap-dot-2 { position:absolute; width:10px; height:10px; background:#1D1D1B; border:2px solid #ED6845; border-radius:50%; top:50%; transform:translateY(-50%); left:calc(37.5% - 5px); }
+    .cap-dot-3 { position:absolute; width:10px; height:10px; background:#1D1D1B; border:2px solid #ED6845; border-radius:50%; top:50%; transform:translateY(-50%); left:calc(62.5% - 5px); }
+
+    .cap-timeline { display:flex; align-items:stretch; min-height:220px; }
+    .cap-item {
+      flex:1; padding:28px 28px 22px;
+      border-right:1px solid rgba(255,255,255,.05);
+      cursor:pointer; position:relative; overflow:hidden;
+      transition: flex 0.5s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
+    }
+    .cap-item:last-child { border-right:none; }
+    .cap-item:hover { flex:1.7; background:rgba(237,104,69,.07); }
+    .cap-timeline:has(.cap-item:hover) .cap-item:not(:hover) {
+      opacity:0.38;
+      transition:opacity 0.3s ease, flex 0.5s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
+    }
+    .cap-item::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+      background:#ED6845; transform:scaleX(0); transform-origin:left;
+      transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .cap-item:hover::after { transform:scaleX(1); }
+
+    .cap-kicker {
+      font-size:clamp(13px,1.3vw,18px); font-weight:500;
+      color:rgba(255,255,255,.72); line-height:1.4;
+    }
+    .cap-kicker .cap-hl { color:#ED6845; font-weight:700; }
+
+    .cap-sep {
+      width:0; height:1.5px; background:rgba(237,104,69,.2);
+      margin:11px 0; transition:width 0.35s cubic-bezier(0.16,1,0.3,1) 0.05s;
+    }
+    .cap-item:hover .cap-sep { width:24px; }
+
+    .cap-headline {
+      font-size:clamp(11px,1vw,14px); font-weight:700;
+      color:#fff; line-height:1.2; letter-spacing:-0.2px;
+      max-height:0; overflow:hidden; opacity:0; transform:translateY(8px);
+      transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1) 0.08s,
+                  opacity 0.35s ease 0.15s, transform 0.4s ease 0.1s;
+    }
+    .cap-item:hover .cap-headline { max-height:80px; opacity:1; transform:translateY(0); margin-bottom:6px; }
+
+    .cap-desc {
+      font-size:clamp(9.5px,0.8vw,11px); font-weight:300; font-style:italic;
+      color:rgba(255,255,255,.45); line-height:1.6;
+      max-height:0; overflow:hidden; opacity:0;
+      transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1) 0.18s, opacity 0.35s ease 0.22s;
+    }
+    .cap-item:hover .cap-desc { max-height:80px; opacity:1; }
+
+    .cap-hint { display:flex; align-items:center; gap:6px; margin-top:10px; opacity:0; transition:opacity 0.3s ease 0.35s; }
+    .cap-item:hover .cap-hint { opacity:1; }
+    .cap-hint-line { width:14px; height:1px; background:rgba(237,104,69,.35); }
+    .cap-hint-txt { font-size:8.5px; font-weight:500; color:#ED6845; letter-spacing:2.5px; text-transform:uppercase; }
+
+    /* footer */
+    .cap-ft {
+      display:flex; align-items:center; justify-content:center;
+      gap:0; padding:10px 32px;
+      border-top:1px solid rgba(255,255,255,.04);
+      position:relative; z-index:2;
+    }
+    .cap-ft-label { font-size:10px; font-weight:600; color:rgba(255,255,255,.28); letter-spacing:2px; text-transform:uppercase; flex-shrink:0; }
+    .cap-ft-arrow { font-size:11px; color:rgba(255,255,255,.18); margin:0 12px; flex-shrink:0; }
+    .cap-ft-eq { font-size:15px; font-weight:600; color:#ED6845; opacity:.7; margin:0 14px; flex-shrink:0; }
+    .cap-ft-goal { display:flex; align-items:center; gap:10px; background:rgba(237,104,69,.08); border:1px solid rgba(237,104,69,.35); border-left:3px solid #ED6845; padding:6px 18px; flex-shrink:0; }
+    .cap-ft-num { font-size:18px; font-weight:800; color:#ED6845; line-height:1; }
+    .cap-ft-desc { font-size:9px; font-weight:600; color:rgba(237,104,69,.75); letter-spacing:2px; text-transform:uppercase; line-height:1.35; }
+
+    /* ── Captación modal overlay ── */
+    .cap-overlay {
+      position:fixed; inset:0; z-index:500;
+      background:rgba(10,10,8,.9);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none;
+      transition:opacity 0.3s ease;
+      backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px);
+    }
+    .cap-overlay.open { opacity:1; pointer-events:all; }
+    .cap-modal {
+      width:90vw; max-width:1100px;
+      background:#232321;
+      border:1px solid rgba(255,255,255,.06);
+      display:grid; grid-template-columns:30% 1px 1fr;
+      position:relative; overflow:hidden;
+      transform:scale(0.95) translateY(16px);
+      transition:transform 0.45s cubic-bezier(0.16,1,0.3,1);
+      max-height:86vh; font-family:'Host Grotesk',system-ui,sans-serif;
+    }
+    .cap-overlay.open .cap-modal { transform:scale(1) translateY(0); }
+    .cap-modal::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:#ED6845; z-index:2; }
+    .cap-modal::after { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.02) 1px,transparent 1px); background-size:36px 36px; pointer-events:none; }
+    .cap-close { position:absolute; top:18px; right:22px; width:30px; height:30px; border:1px solid rgba(255,255,255,.1); background:transparent; color:rgba(255,255,255,.3); border-radius:2px; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center; transition:border-color .2s,color .2s,background .2s; z-index:10; font-family:'Host Grotesk',sans-serif; }
+    .cap-close:hover { border-color:#ED6845; color:#ED6845; background:rgba(237,104,69,.08); }
+    .cap-mleft { position:relative; z-index:1; padding:48px 40px 40px 48px; display:flex; flex-direction:column; justify-content:center; gap:12px; overflow:hidden; }
+    .cap-mghost { position:absolute; bottom:-16px; left:-8px; font-size:180px; font-weight:800; line-height:1; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.04); pointer-events:none; user-select:none; letter-spacing:-10px; }
+    .cap-mtag { display:flex; align-items:center; gap:8px; }
+    .cap-mtag-line { width:18px; height:2px; background:#ED6845; }
+    .cap-mtag-txt { font-size:8.5px; font-weight:600; color:#ED6845; letter-spacing:4px; text-transform:uppercase; }
+    .cap-mtitle { font-size:clamp(28px,3.2vw,46px); font-weight:800; color:#fff; line-height:1.0; letter-spacing:-1.5px; }
+    .cap-mtitle .cap-hl { color:#ED6845; }
+    .cap-mkicker { font-size:12px; font-weight:300; font-style:italic; color:rgba(255,255,255,.48); line-height:1.65; max-width:260px; }
+    .cap-mdiv { background:linear-gradient(to bottom, transparent 5%, rgba(237,104,69,.2) 25%, rgba(237,104,69,.2) 75%, transparent 95%); }
+    .cap-mright { position:relative; z-index:1; padding:40px 44px 40px 40px; display:flex; flex-direction:column; gap:0; overflow-y:auto; scrollbar-width:thin; scrollbar-color:rgba(237,104,69,.2) transparent; }
+    .cap-mright::-webkit-scrollbar { width:3px; }
+    .cap-mright::-webkit-scrollbar-thumb { background:rgba(237,104,69,.2); border-radius:2px; }
+    .cap-chapter { padding:18px 0; border-bottom:1px solid rgba(255,255,255,.05); display:flex; flex-direction:column; gap:6px; }
+    .cap-chapter:first-child { padding-top:2px; }
+    .cap-chapter:last-child { border-bottom:none; padding-bottom:2px; }
+    .cap-ch-label { font-size:8.5px; font-weight:600; color:#ED6845; letter-spacing:3.5px; text-transform:uppercase; }
+    .cap-chapter.cap-tg .cap-ch-label { color:#fff; background:#ED6845; padding:2px 9px; width:fit-content; font-size:8.5px; letter-spacing:2.5px; }
+    .cap-ch-title { font-size:clamp(13px,1.2vw,16px); font-weight:700; color:#fff; line-height:1.2; letter-spacing:-.2px; }
+    .cap-ch-body { font-size:clamp(11px,0.9vw,12.5px); font-weight:400; color:rgba(255,255,255,.48); line-height:1.7; }
+    .cap-ch-body strong { color:rgba(255,255,255,.72); font-weight:500; }
+    .cap-ch-bullets { list-style:none; padding:0; display:flex; flex-direction:column; gap:4px; margin-top:3px; }
+    .cap-ch-bullets li { display:flex; align-items:flex-start; gap:9px; font-size:clamp(10.5px,0.9vw,12.5px); font-weight:400; color:rgba(255,255,255,.48); line-height:1.5; }
+    .cap-ch-bullets li::before { content:''; width:4px; height:4px; border-radius:50%; background:#ED6845; flex-shrink:0; margin-top:5px; }
+    .cap-ch-bullets li strong { color:rgba(255,255,255,.72); font-weight:500; }
+    .cap-stat { display:inline-flex; align-items:baseline; gap:9px; background:rgba(237,104,69,.08); border:1px solid rgba(237,104,69,.2); padding:8px 14px; margin-top:5px; width:fit-content; }
+    .cap-stat-n { font-size:24px; font-weight:800; color:#ED6845; line-height:1; }
+    .cap-stat-d { font-size:11px; color:rgba(255,255,255,.48); line-height:1.4; }
+    .cap-stat-d strong { color:rgba(255,255,255,.72); }
+
+    /* placeholder palanca panels */
+    .palanca-coming { background:var(--surface); border:0.5px dashed var(--border-mid); border-radius:var(--radius-lg); padding:2.5rem; text-align:center; color:var(--text-muted); font-size:13px; font-style:italic; }
+
+    /* ── Demo funcio shared CSS ── */
+    .demo-wrap{font-family:'Host Grotesk',system-ui,sans-serif;background:var(--gris);color:var(--grafito);line-height:1.6;border-radius:var(--radius-lg);overflow:hidden;}
+    .demo-header-block{background:var(--petrol);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:1.5rem 1.75rem 1.75rem;margin-bottom:1.5rem;}
+    .demo-header-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem;}
+
+    /* Footer */
+    .footer-bottom {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-bottom a { color: var(--orange); text-decoration: none; }
+
+    /* CTA al final */
+    .cta-section {
+      max-width: 900px;
+      margin: 1rem auto 4rem;
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, rgba(237,104,69,0.10) 0%, rgba(237,104,69,0.03) 100%);
+      border: 1px solid rgba(237,104,69,0.25);
+      border-radius: 14px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      margin: 0 0 0.6rem;
+      color: #fff;
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+      margin: 0 0 1.5rem;
+      line-height: 1.55;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      text-decoration: none;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14.5px;
+      box-shadow: 0 4px 14px rgba(237,104,69,0.35);
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .cta-btn:hover { box-shadow: 0 6px 18px rgba(237,104,69,0.42); }
+    .cta-btn:active { transform: scale(0.97); }
+
+    /* Mobile fixes */
+    @media (max-width: 760px) {
+      .hero { padding: 2rem 1.25rem 1.5rem; }
+      .palancas-row { padding: 0 1rem 2rem; }
+      .palancas-grid { gap: 0.85rem; }
+      /* En móvil, en modo zoom las palancas no expandidas se ven igual de pequeñas que sin zoom */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <img src="https://trainingym.com/hs-fs/hubfs/Logo-Blanco-Trainingym.png" alt="Trainingym">
+    <a href="https://trainingym.com" target="_blank" rel="noopener">trainingym.com →</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Metodología <strong>Trainingym</strong></h1>
+  </div>
+
+  <!-- Tabs de selección de palanca -->
+  <div class="palanca-tabs">
+    <button class="palanca-tab on" data-palanca="cap" onclick="zoomPalanca('cap')">
+      <span class="palanca-tab-name">Captación</span>
+    </button>
+    <button class="palanca-tab" data-palanca="tiem" onclick="zoomPalanca('tiem')">
+      <span class="palanca-tab-name">Ahorro de tiempo</span>
+    </button>
+    <button class="palanca-tab" data-palanca="fid" onclick="zoomPalanca('fid')">
+      <span class="palanca-tab-name">Fidelización</span>
+    </button>
+    <button class="palanca-tab" data-palanca="ing" onclick="zoomPalanca('ing')">
+      <span class="palanca-tab-name">Ingresos</span>
+    </button>
+  </div>
+
+  <!-- Las 4 palancas en grid lineal -->
+  <div class="palancas-row">
+    <div class="palancas-grid zoom-cap" id="palancas-grid">
+
+      <!-- ── PALANCA 1: CAPTACIÓN ── -->
+      <div class="palanca-col active" id="pal-cap" onclick="onPalancaClick('cap', event)">
+        <div class="palanca-head">
+          <span class="palanca-head-name">Captación</span>
+        </div>
+        <div class="palanca-mini-stat">+10% Crecimiento neto</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div><div class="cap-dot-3"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="capOpenModal('posicionamiento'); event.stopPropagation();">
+                    <p class="cap-kicker">8 de 10 inscripciones vienen de tu <span class="cap-hl">posicionamiento</span>.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Antes de entrar por tu puerta, te buscan.</p>
+                    <p class="cap-desc">El posicionamiento es la nueva ubicación. Estar donde te buscan — antes que la competencia.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="capOpenModal('presencia'); event.stopPropagation();">
+                    <p class="cap-kicker">Tu <span class="cap-hl">presencia</span> lo es todo.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Tu marca vende incluso cuando tú descansas.</p>
+                    <p class="cap-desc">Redes sociales y web propia que transforman seguidores en pruebas — y pruebas en altas.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="capOpenModal('referidos'); event.stopPropagation();">
+                    <p class="cap-kicker">Los <span class="cap-hl">referidos</span> son la clave.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Tu mejor comercial ya es tu cliente.</p>
+                    <p class="cap-desc">La recomendación de alguien de confianza vale más que cualquier anuncio.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="capOpenModal('comunicacion'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Comunicación</span> efectiva.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">El mensaje correcto, en el momento exacto.</p>
+                    <p class="cap-desc">Hablarle a la persona adecuada, por el canal que usa, con lo que necesita escuchar.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Posiciona</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Muestra</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Activa referidos</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Comunica</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num">+10%</span>
+                  <span class="cap-ft-desc">Crecimiento<br>neto</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PALANCA 2: AHORRO DE TIEMPO ── -->
+      <div class="palanca-col" id="pal-tiem" onclick="onPalancaClick('tiem', event)">
+        <div class="palanca-head">
+          <span class="palanca-head-name">Ahorro de tiempo</span>
+        </div>
+        <div class="palanca-mini-stat">Recursos optimizados</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div><div class="cap-dot-3"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="tiemOpenModal('cobros'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Cobrar</span> de forma automática.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Cuotas, tarifas y pagos recurrentes sin gestión manual.</p>
+                    <p class="cap-desc">Domiciliación recurrente en tarjeta — el estándar que maximiza retención.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="tiemOpenModal('recepcion'); event.stopPropagation();">
+                    <p class="cap-kicker">La <span class="cap-hl">recepción</span> sin colapsos.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Altas, autoservicio y control financiero en piloto automático.</p>
+                    <p class="cap-desc">Que el cliente se gestione solo — tú solo supervisas.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="tiemOpenModal('acceso'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Acceso</span> conectado al CRM.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Control de acceso conectado al pago — cero entradas sin cobrar.</p>
+                    <p class="cap-desc">La barrera filtra a quien no está al día — sin intervención humana.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="tiemOpenModal('automatizacion'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Automatizar</span> el seguimiento.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">El seguimiento que fideliza — hecho solo, sin que nadie lo recuerde.</p>
+                    <p class="cap-desc">Notificaciones, reservas, encuestas NPS y avisos funcionando solos.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Cobros</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Recepción</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Acceso</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Automatización</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num" style="font-size:14px">Equipo</span>
+                  <span class="cap-ft-desc">enfocado en<br>experiencia</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PALANCA 3: FIDELIZACIÓN ── -->
+      <div class="palanca-col" id="pal-fid" onclick="onPalancaClick('fid', event)">
+        <div class="palanca-head">
+          <span class="palanca-head-name">Fidelización</span>
+        </div>
+        <div class="palanca-mini-stat">+30% ingresos · +4 meses LTV</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="fidOpenModal('onboarding'); event.stopPropagation();">
+                    <p class="cap-kicker">La <span class="cap-hl">bienvenida</span> es tu mayor oportunidad.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Proceso de bienvenida inicial — detecta el riesgo antes de que sea tarde.</p>
+                    <p class="cap-desc">Identifica desde el primer día si el cliente formará el hábito o lo perderás.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="fidOpenModal('experiencia'); event.stopPropagation();">
+                    <p class="cap-kicker">Sin <span class="cap-hl">seguimiento</span>, se va sin avisar.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Análisis, prescripción y nutrición — personalizados y renovados en el tiempo.</p>
+                    <p class="cap-desc">La experiencia del cliente diseñada desde la primera cita con el entrenador.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="fidOpenModal('comunidad'); event.stopPropagation();">
+                    <p class="cap-kicker">La <span class="cap-hl">comunidad</span> multiplica la vida media x6.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Gamificación y comunidad — el cliente que pertenece no se va.</p>
+                    <p class="cap-desc">Puntos, premios y Gymder — conecta a tus clientes entre sí y con tu marca.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Bienvenida</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Experiencia</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Comunidad</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num">+30%</span>
+                  <span class="cap-ft-desc">ingresos ·<br>+4 meses LTV</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PALANCA 4: INGRESOS ── -->
+      <div class="palanca-col" id="pal-ing" onclick="onPalancaClick('ing', event)">
+        <div class="palanca-head">
+          <span class="palanca-head-name">Ingresos</span>
+        </div>
+        <div class="palanca-mini-stat">+40% aumento de ingresos</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="ingOpenModal('permanencia'); event.stopPropagation();">
+                    <p class="cap-kicker">Un <span class="cap-hl">cliente que no se va</span>.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Permanencia — la palanca que aporta el 30% del incremento de ingresos.</p>
+                    <p class="cap-desc">Comunidad, bienvenida, seguimiento y tecnología — cada acción suma meses de vida media.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="ingOpenModal('upselling'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Upselling</span> — dar más valor.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Cuota básica de entrada + cuota premium — el modelo que ya funciona en otras industrias.</p>
+                    <p class="cap-desc">Del acceso básico al servicio premium — un camino natural que el cliente sube solo.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="ingOpenModal('crosselling'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Cross-selling</span> — ingreso ya tienes.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Nutrición, entrenamiento personal, masterclasses — fácil de comprar, alto margen.</p>
+                    <p class="cap-desc">Solo el 1-5% de tus clientes usa estos servicios. El problema no es el servicio — es el acceso.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Permanencia</span>
+                <span style="font-size:9px;color:#ED6845;margin-left:4px;font-weight:600">+30%</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Upselling</span>
+                <span style="font-size:9px;color:#ED6845;margin-left:4px;font-weight:600">+5%</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Cross-selling</span>
+                <span style="font-size:9px;color:#ED6845;margin-left:4px;font-weight:600">+5%</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num">+40%</span>
+                  <span class="cap-ft-desc">aumento de<br>ingresos</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /palancas-grid -->
+  </div><!-- /palancas-row -->
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>¿Quieres saber la inversión para potenciar las palancas en tu negocio?</h2>
+    <p>Calcula tu propuesta personalizada en menos de 2 minutos — sin compromiso.</p>
+    <a href="https://mirkotrain.github.io/tarifas-trainingym/" class="cta-btn" target="_blank" rel="noopener">Calcular mi tarifa →</a>
+  </div>
+
+
+  <!-- ─── MODALES ─── -->
+
+  <!-- CAPTACIÓN MODAL -->
+  <div class="cap-overlay" id="cap-overlay" onclick="capOverlayClick(event)">
+    <div class="cap-modal" id="cap-modal">
+      <button class="cap-close" onclick="capCloseModal()">✕</button>
+      <div class="cap-mleft" id="cap-mleft">
+        <div class="cap-mghost" id="cap-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="cap-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="cap-mtitle"></div>
+        <p class="cap-mkicker" id="cap-mkicker"></p>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="cap-mright"></div>
+    </div>
+  </div>
+
+  <!-- AHORRO DE TIEMPO MODAL -->
+  <div class="cap-overlay" id="tiem-overlay" onclick="tiemOverlayClick(event)">
+    <div class="cap-modal">
+      <button class="cap-close" onclick="tiemCloseModal()">✕</button>
+      <div class="cap-mleft">
+        <div class="cap-mghost" id="tiem-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="tiem-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="tiem-mtitle"></div>
+        <p class="cap-mkicker" id="tiem-mkicker"></p>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="tiem-mright"></div>
+    </div>
+  </div>
+
+  <!-- FIDELIZACIÓN MODAL -->
+  <div class="cap-overlay" id="fid-overlay" onclick="fidOverlayClick(event)">
+    <div class="cap-modal">
+      <button class="cap-close" onclick="fidCloseModal()">✕</button>
+      <div class="cap-mleft">
+        <div class="cap-mghost" id="fid-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="fid-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="fid-mtitle"></div>
+        <p class="cap-mkicker" id="fid-mkicker"></p>
+        <div class="cap-stat" style="margin-top:.5rem"><span class="cap-stat-n">+30%</span><span class="cap-stat-d">de ingresos · el cliente pasa de <strong>12 a 16 meses</strong> de vida media</span></div>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="fid-mright"></div>
+    </div>
+  </div>
+
+  <!-- INGRESOS MODAL -->
+  <div class="cap-overlay" id="ing-overlay" onclick="ingOverlayClick(event)">
+    <div class="cap-modal">
+      <button class="cap-close" onclick="ingCloseModal()">✕</button>
+      <div class="cap-mleft">
+        <div class="cap-mghost" id="ing-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="ing-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="ing-mtitle"></div>
+        <p class="cap-mkicker" id="ing-mkicker"></p>
+        <div class="cap-stat" style="margin-top:.5rem"><span class="cap-stat-n" id="ing-result-num"></span><span class="cap-stat-d" id="ing-result-desc"></span></div>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="ing-mright"></div>
+    </div>
+  </div>
+
+  <script>
+  // ── ZOOM DE PALANCAS ──
+  function zoomPalanca(id) {
+    // Actualizar tabs
+    document.querySelectorAll('.palanca-tab').forEach(t => {
+      t.classList.toggle('on', t.dataset.palanca === id);
+    });
+
+    // En móvil/tablet (≤1100px) no hay zoom — solo scroll a la palanca
+    if (window.innerWidth <= 1100) {
+      const el = document.getElementById('pal-' + id);
+      if (el) {
+        // Calcular offset para que no quede tapada por los tabs sticky
+        const tabs = document.querySelector('.palanca-tabs');
+        const tabsHeight = tabs ? tabs.offsetHeight : 0;
+        const elTop = el.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: elTop - tabsHeight - 12, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    // Desktop: aplicar zoom
+    const grid = document.getElementById('palancas-grid');
+    grid.classList.remove('zoom-cap', 'zoom-tiem', 'zoom-fid', 'zoom-ing');
+    grid.classList.add('zoom-' + id);
+    document.querySelectorAll('.palanca-col').forEach(col => col.classList.remove('active'));
+    document.getElementById('pal-' + id).classList.add('active');
+  }
+  // Click en una palanca compacta = zoom a ella
+  function onPalancaClick(id, event) {
+    // Si ya está activa, no hacer nada (el click puede haber sido en .cap-item)
+    if (document.getElementById('pal-' + id).classList.contains('active')) return;
+    zoomPalanca(id);
+  }
+
+  // ── En móvil: detectar qué palanca está visible al hacer scroll y resaltar tab ──
+  function setupMobileScrollObserver() {
+    if (window.innerWidth > 1100) return;
+    const palancaIds = ['cap', 'tiem', 'fid', 'ing'];
+    const observer = new IntersectionObserver((entries) => {
+      // Encontrar la palanca con mayor visibilidad
+      let bestId = null;
+      let bestRatio = 0;
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > bestRatio) {
+          bestRatio = entry.intersectionRatio;
+          bestId = entry.target.id.replace('pal-', '');
+        }
+      });
+      if (bestId && bestRatio > 0.3) {
+        document.querySelectorAll('.palanca-tab').forEach(t => {
+          t.classList.toggle('on', t.dataset.palanca === bestId);
+        });
+      }
+    }, { threshold: [0.3, 0.5, 0.7] });
+    palancaIds.forEach(id => {
+      const el = document.getElementById('pal-' + id);
+      if (el) observer.observe(el);
+    });
+  }
+  // Activar tras carga
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileScrollObserver);
+  } else {
+    setupMobileScrollObserver();
+  }
+  // Recalcular si rota / cambia de tamaño
+  let _resizeT = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(_resizeT);
+    _resizeT = setTimeout(setupMobileScrollObserver, 200);
+  });
+
+  // ── CAPTACIÓN MODAL DATA + FUNCTIONS ──
+  const CAP_DATA = {
+    posicionamiento: {
+      ghost: '01', tag: 'Posicionamiento',
+      title: 'Posicio-<br>na<span class="cap-hl">miento</span>',
+      kicker: 'El posicionamiento digital es la nueva ubicación de tu negocio fitness.',
+      chapters: [
+        { label: 'La ubicación digital', title: 'El primer motivo de inscripción es lo fácil que te encuentran', body: 'Un potencial cliente que busca <strong>"gimnasio cerca de mí"</strong> toma su decisión en segundos — y la primera opción que aparece se lleva la mayoría de las altas. Estar bien ubicado físicamente ya no es suficiente si no estás igual de bien ubicado en el mundo digital.' },
+        { label: '¿Qué deberías hacer?', title: 'Cada review es una posición que ganas', body: 'Un perfil bien cuidado con toda la información disponible — horarios, precios, fotos, servicios — es la diferencia entre aparecer o no aparecer. Pedir reviews de forma activa, responder a cada valoración y mantener el perfil actualizado son las acciones que te posicionan por encima de la competencia.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Gestionar varias plataformas sin un equipo dedicado es inviable', body: 'La mayoría de negocios fitness lo intentan — y lo abandonan. El motivo es siempre el mismo:', points: ['Necesitas conocer y gestionar <strong>múltiples plataformas</strong> a la vez: Google, Instagram, Facebook, TikTok...', 'Requiere un <strong>equipo dedicado</strong> que entienda de redes, analítica y posicionamiento digital', 'Sin tiempo ni recursos, <strong>el perfil queda desactualizado</strong> y las reviews sin responder', 'Resultado: la competencia que sí lo cuida aparece antes que tú'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Un cuadro de mando que conecta tu mundo digital completo', tg: true, points: ['Agrega tu <strong>web, Google Business y todas tus redes</strong> en un único lugar', 'Analítica unificada: conoce quiénes son tus seguidores, sus gustos y cómo reaccionan a tus publicaciones', '<strong>Bandeja de entrada única</strong> para recibir y contestar mensajes de todas tus redes', 'Publicaciones en todas tus redes en <strong>un solo clic</strong>', 'Herramientas para <strong>analizar a tu competencia</strong> y tomar decisiones', 'Gestión de campañas <strong>orgánicas y de pago</strong> desde el mismo panel'] }
+      ]
+    },
+    presencia: {
+      ghost: '02', tag: 'Presencia de marca',
+      title: 'Pre<span class="cap-hl">sencia</span><br>de marca',
+      kicker: 'Tu marca vende incluso cuando tú descansas.',
+      chapters: [
+        { label: 'La presencia digital', title: 'Redes sociales y web: el embudo completo de captación', body: 'Las redes sociales son el escaparate donde tu potencial cliente te descubre. La web es donde decide. Juntas, forman el embudo que convierte un desconocido en un alta — <strong>las 24 horas, sin que tú tengas que intervenir</strong>.' },
+        { label: '¿Qué deberías hacer?', title: 'Contenido que capta + web que convierte', body: 'Publicar en Instagram, Facebook y TikTok con contenido dirigido a tu buyer persona, y enviar ese tráfico a una web propia que informe, genere confianza y permita <strong>inscribirse o comprar en el momento</strong> — sin llamadas, sin fricción.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Crear y mantener una web es caro, lento y técnico', body: 'La realidad de la mayoría de negocios fitness hoy:', points: ['<strong>No tienen web propia</strong> — o tienen una desactualizada que no convierte', 'Crear una web supone una <strong>inversión elevada</strong> en diseño y desarrollo', 'Son difíciles de mantener: <strong>dependen de agencias</strong> para cada cambio', 'No permiten <strong>registro ni venta de servicios online</strong>', 'Resultado: pierden altas que llegan fuera de horario y no encuentran cómo inscribirse'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Web propia + redes + formularios en un único ecosistema', tg: true, points: ['Crea y personaliza tu <strong>página web propia en minutos</strong> — sin necesidad de equipo técnico', 'Vende tus servicios online <strong>24 h al día en solo 3 clics</strong>', 'Publica en <strong>todas tus redes a la vez</strong> desde un único panel', '<strong>Formularios de captación</strong> que convierten seguidores en solicitudes de prueba', 'Analítica de todas tus redes para saber <strong>qué contenido funciona</strong> y con quién', 'Gestión de <strong>campañas orgánicas y de pago</strong> desde el mismo lugar'] }
+      ]
+    },
+    referidos: {
+      ghost: '03', tag: 'Sistema de referidos',
+      title: 'Refe<span class="cap-hl">ridos</span>',
+      kicker: 'Nada vende más que la confianza de alguien cercano.',
+      chapters: [
+        { label: 'El referido como motor', title: 'El segundo motivo de inscripción más poderoso', body: 'Después de la ubicación, la <strong>recomendación de un cliente activo</strong> es la razón más poderosa por la que alguien se apunta. No hay campaña de pago que compita con eso — y tiene doble impacto en tus ingresos.', stat: true, statNum: '+200%', statDesc: '<strong>vida media del cliente</strong> cuando entrena acompañado · Fuente: IHRSA' },
+        { label: '¿Qué deberías hacer?', title: 'Un sistema constante, no una acción puntual', body: 'El error más común es activar el referido solo en épocas de baja captación. Para que funcione de verdad, tiene que ser <strong>una estrategia permanente</strong> que convierta a cada cliente satisfecho en un embajador activo del negocio.' },
+        { label: '¿Cuál es tu dificultad?', title: 'O no se hace, o se hace mal, o no se premia', body: 'La mayoría de centros deportivos fallan siempre en el mismo punto:', points: ['<strong>No tienen un sistema</strong> — el referido queda en buenas intenciones', 'Lo activan solo en <strong>épocas puntuales</strong> para captar, no de forma continuada', '<strong>No premian al cliente</strong> que trae a alguien, o lo hacen de forma informal', 'Premiar al cliente les supone un <strong>esfuerzo grande de organización</strong> manual', 'Resultado: dejan escapar su mejor canal de captación por falta de sistema'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Sistema automatizado de referidos con recompensa configurable', tg: true, points: ['<strong>Configuras los puntos y premios</strong> que se asignan por cada persona referida', 'El cliente invita desde la app móvil en <strong>1 clic</strong> compartiendo un enlace por WhatsApp', 'Cuando el invitado se inscribe, <strong>los puntos llegan automáticamente</strong> — sin gestión manual', 'El sistema funciona de forma <strong>constante y autónoma</strong> todos los días del año', 'Genera <strong>nuevas altas y mayor retención</strong> de los clientes que ya tienes'] }
+      ]
+    },
+    comunicacion: {
+      ghost: '04', tag: 'Comunicación',
+      title: 'Comuni<span class="cap-hl">cación</span>',
+      kicker: 'El mensaje correcto, al cliente correcto, por el canal correcto.',
+      chapters: [
+        { label: 'La comunicación como captación', title: 'Comunicar bien es la diferencia entre captar y no captar', body: 'La mayoría de negocios fitness ofrecen más de lo que comunican. <strong>El problema no es lo que hacen — es que no llegan a contarlo</strong> de forma efectiva, en el momento adecuado, a quien lo necesita escuchar.' },
+        { label: '¿Qué deberías hacer?', title: 'Segmentar, personalizar y elegir el canal correcto', body: 'Conoce a tu buyer persona y segmenta tu base de datos. Diseña <strong>playbooks de venta</strong> con argumentos que van al dolor y al deseo de cada perfil — no vendes un gimnasio, vendes transformación. Y comunícalo por el canal donde está tu cliente.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Sin sistema, la comunicación es dispersa e ineficiente', body: 'Lo que ocurre en la práctica:', points: ['<strong>No tienen un sistema</strong> para segmentar su base de datos por perfil o comportamiento', 'No pueden comunicarse de forma efectiva a través de <strong>diferentes canales</strong> a la vez', 'No llegan a comunicar <strong>todo lo que hacen</strong> ni poner en valor lo que ofrecen', 'El mensaje es genérico — no habla al <strong>dolor real</strong> de cada tipo de cliente', 'Resultado: bajo ratio de conversión y clientes que no perciben el valor del centro'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Train Engine — marketing segmentado y multicanal', tg: true, points: ['<strong>Segmentación avanzada</strong>: activo, potencial, excliente en baja — cada uno recibe lo suyo', '<strong>Email marketing</strong> personalizado con templates y automatizaciones', '<strong>Mensajes push</strong> en la app para comunicaciones inmediatas', '<strong>WhatsApp y SMS</strong> para los canales de mayor tasa de apertura', '<strong>Encuestas automáticas y manuales</strong> para escuchar y mejorar', 'Todo desde una única plataforma — sin necesidad de herramientas externas'] }
+      ]
+    }
+  };
+
+  function capOpenModal(key) {
+    const d = CAP_DATA[key];
+    document.getElementById('cap-mghost').textContent = d.ghost;
+    document.getElementById('cap-mtag-txt').textContent = d.tag;
+    document.getElementById('cap-mtitle').innerHTML = d.title;
+    document.getElementById('cap-mkicker').textContent = d.kicker;
+    const right = document.getElementById('cap-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml  = c.body   ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml  = c.stat   ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}</div>`;
+    }).join('');
+    document.getElementById('cap-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function capCloseModal() {
+    document.getElementById('cap-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function capOverlayClick(e) {
+    if (e.target === document.getElementById('cap-overlay')) capCloseModal();
+  }
+
+  // ── AHORRO DE TIEMPO MODAL DATA + FUNCTIONS ──
+  const TIEM_DATA = {
+    cobros: {
+      ghost: '01', tag: 'Gestión económica',
+      title: 'Gestión<br><span class="cap-hl">económica</span>',
+      kicker: 'El método de pago define la vida media del cliente y la salud financiera del negocio.',
+      chapters: [
+        { label: 'La situación', title: 'Sin automatización, cobrar consume tiempo y genera pérdidas', body: 'Gestionar manualmente quién paga, quién se demora y qué producto tiene contratado cada cliente es inviable. <strong>Cada gestión manual es tiempo que tu equipo no dedica a la experiencia del cliente.</strong>' },
+        { label: '¿Qué deberías hacer?', title: 'Domiciliación recurrente en tarjeta — el estándar que maximiza retención', body: '<strong>Automático:</strong> elimina la gestión manual y no pierdes clientes por hacerles difícil el pago. <strong>Recurrente:</strong> conoces los ingresos a principio de mes. <strong>En tarjeta:</strong> vendes 24/7 y el importe cobrado es muy difícil de devolver.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Herramientas rudimentarias que no permiten crear producto real', body: 'La mayoría de negocios fitness trabajan con plataformas que no les permiten crecer:', points: ['No pueden crear <strong>cuotas recurrentes</strong> ni bonos de sesiones', 'Sin posibilidad de <strong>combinar productos</strong> o aplicar matrículas', 'No tienen contratación <strong>desde web</strong> ni autoservicio', 'Sin pasarela de pagos integrada — todo es <strong>gestión manual</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Creación de producto, cobro automático y venta online en un único sistema', tg: true, points: ['Cuotas <strong>mensuales recurrentes</strong>, bonos de sesiones, matrículas y combinaciones', '<strong>Pasarela de pagos conectada</strong> que cobra de forma automática', 'Créditos como medio de pago para <strong>reducir comisiones</strong>', 'Contratación y compra desde <strong>página web 24/7</strong>', 'Control en tiempo real de <strong>quién paga, quién se demora</strong> y qué producto tiene', 'Tarifas diferenciadas según <strong>buyer persona</strong> y necesidades del cliente'] }
+      ]
+    },
+    recepcion: {
+      ghost: '02', tag: 'Recepción automatizada',
+      title: 'Auto<span class="cap-hl">matiza</span><br>recepción',
+      kicker: 'La recepción desbordada es tiempo perdido y mala experiencia para todos.',
+      chapters: [
+        { label: 'La situación', title: 'En épocas de cobro, la recepción se colapsa', body: 'Cuando los clientes vienen a pagar o a hacer gestiones, el staff se ve desbordado. <strong>Crea mala experiencia para el cliente y desmotiva al equipo</strong> — que debería estar dedicado a generar valor, no a procesar pagos manuales.' },
+        { label: '¿Qué deberías hacer?', title: 'Que el cliente se gestione solo — tú solo supervisas', body: 'Procesos de alta, renovación y compra de producto que el cliente puede completar de forma autónoma, sin pasar por recepción. El staff queda libre para <strong>crear experiencia, no para gestionar colas.</strong>' },
+        { label: '¿Cuál es tu dificultad?', title: 'Sin tecnología, cada gestión requiere una persona', body: 'El coste real del modelo actual:', points: ['El staff dedica horas a <strong>tareas administrativas</strong> que podrían automatizarse', 'En épocas de cobro, la recepción <strong>se colapsa</strong> y la atención cae', 'Sin visibilidad financiera en tiempo real — los datos <strong>llegan tarde o no llegan</strong>', 'Mala experiencia para el cliente que <strong>espera para cualquier gestión</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Autoservicio, kiosco digital y control financiero centralizado', tg: true, points: ['Altas y contratación desde <strong>web o pantalla de autoservicio</strong>', 'Compra de producto mediante <strong>código QR</strong>', 'Gestión de <strong>invitaciones de clientes automatizada</strong>', 'Integración con <strong>pasarelas de pago</strong> que el gimnasio ya utiliza', 'Dashboard financiero: cobros acumulados, pendientes, <strong>por tipo de producto</strong>', 'Control absoluto sobre <strong>quién paga qué</strong> — en tiempo real'] }
+      ]
+    },
+    acceso: {
+      ghost: '03', tag: 'Control de acceso',
+      title: 'Control<br>de <span class="cap-hl">acceso</span>',
+      kicker: 'Cada cliente que entra sin pagar es dinero que pierdes — y no lo estás contando.',
+      chapters: [
+        { label: 'La situación', title: 'Sin sistema conectado, nadie detecta quién entra sin pagar', body: 'El staff valida manualmente si el cliente ha pagado o no — y falla. Sin integración entre el control de acceso y el sistema de cobros, <strong>la puerta de tu negocio está abierta para quien no paga.</strong>', stat: true, statNum: '15-20', statDesc: '<strong>clientes al mes</strong> entran gratis en un gimnasio de 500 usuarios activos — más de <strong>10.000 € perdidos al año</strong>' },
+        { label: '¿Qué deberías hacer?', title: 'Conectar el acceso físico con el estado de pago del cliente', body: 'La barrera de entrada tiene que saber, en tiempo real, si el cliente está al día. Si no lo está, <strong>la barrera lo frena y le indica cómo regularizar su situación</strong> — sin intervención humana.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Un sistema de acceso desconectado del CRM no sirve de nada', body: 'Lo que ocurre sin integración:', points: ['El staff valida manualmente — <strong>errores, inconsistencias y tiempo perdido</strong>', 'Clientes con pagos pendientes entran igual — <strong>pérdida directa de ingresos</strong>', 'Modelos 24/7 desatendidos son <strong>imposibles sin automatización</strong>', 'Sin datos de acceso, no sabes <strong>cuándo ni con qué frecuencia viene tu cliente</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Sistema modular de control de acceso integrado con cobros y CRM', tg: true, points: ['Tornos, barreras o puertas con <strong>reconocimiento facial o QR</strong>', 'La barrera filtra automáticamente clientes con <strong>pagos pendientes</strong>', 'Indica al cliente cómo <strong>regularizar su situación</strong> en el momento', 'Compatible con modelos <strong>24/7 totalmente desatendidos</strong>', 'Integración directa con el <strong>CRM y sistema de pagos</strong> de Trainingym', 'Datos de acceso para conocer <strong>frecuencia y hábitos</strong> de cada cliente'] }
+      ]
+    },
+    automatizacion: {
+      ghost: '04', tag: 'Notificaciones y reservas',
+      title: '<span class="cap-hl">Notificaciones</span><br>encuestas<br>y reservas',
+      kicker: 'El seguimiento que fideliza es el que ocurre sin que nadie tenga que recordarlo.',
+      chapters: [
+        { label: 'La situación', title: 'Sin sistema, el seguimiento depende de la memoria de tu equipo', body: 'Avisar de una renovación, gestionar reservas de clases, enviar una encuesta de satisfacción o felicitar un cumpleaños — son acciones que <strong>marcan la fidelización</strong> pero que no se hacen porque requieren tiempo que no existe.' },
+        { label: '¿Qué deberías hacer?', title: 'Automatizar el ciclo de vida completo del cliente', body: 'Desde la bienvenida hasta la renovación: notificaciones, reservas, encuestas NPS y seguimiento de asistencia funcionando solos — <strong>basados en los parámetros reales de cada cliente.</strong>' },
+        { label: '¿Cuál es tu dificultad?', title: 'Sin sistema, todo es manual — errores, olvidos y mala experiencia', body: 'La realidad de la mayoría de centros deportivos:', points: ['Las reservas de clases se gestionan <strong>por WhatsApp o no existen</strong>', 'Multiplicar por 2 la asistencia a clase es posible con reserva — <strong>pero nadie lo hace</strong>', 'No se envían encuestas NPS ni de satisfacción — <strong>no conocen el grado real de satisfacción</strong> de sus clientes', 'Los avisos de renovación, cumpleaños y seguimiento <strong>se olvidan o se hacen a mano</strong>', 'Sin datos cualitativos ni cuantitativos de las actividades, <strong>no saben qué rentabilizar</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Train Engine — automatización completa del ciclo de vida del cliente', tg: true, points: ['Notificaciones automáticas por <strong>días sin asistir, renovaciones y cumpleaños</strong>', 'Sistema de reservas publicable en <strong>app, web o incrustado en cualquier página</strong>', 'Diseño de espacios y <strong>políticas de reserva configurables</strong>', 'Validación automática o semiautomática de <strong>asistentes a clases</strong>', '<strong>Encuesta NPS automática</strong> y encuestas por servicio (entrenamiento, pesaje, actividades)', 'Análisis de datos: <strong>rentabilidad por actividad</strong> y satisfacción del cliente'] }
+      ]
+    }
+  };
+
+  function tiemOpenModal(key) {
+    const d = TIEM_DATA[key];
+    document.getElementById('tiem-mghost').textContent = d.ghost;
+    document.getElementById('tiem-mtag-txt').textContent = d.tag;
+    document.getElementById('tiem-mtitle').innerHTML = d.title;
+    document.getElementById('tiem-mkicker').textContent = d.kicker;
+    const right = document.getElementById('tiem-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml   = c.body   ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml   = c.stat   ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}</div>`;
+    }).join('');
+    document.getElementById('tiem-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function tiemCloseModal() {
+    document.getElementById('tiem-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function tiemOverlayClick(e) {
+    if (e.target === document.getElementById('tiem-overlay')) tiemCloseModal();
+  }
+
+  // ── FIDELIZACIÓN MODAL DATA + FUNCTIONS ──
+  const FID_DATA = {
+    onboarding: {
+      ghost: '01', tag: 'Proceso de bienvenida',
+      title: 'Proceso de<br><span class="cap-hl">bienvenida</span>',
+      kicker: 'El hábito es el único indicador que determina si un cliente se queda o se va.',
+      chapters: [
+        { label: 'La situación', title: 'El 80% de los abandonos ocurre en los primeros 3 meses', body: 'Para un negocio de pago recurrente, <strong>aumentar la vida media del cliente es aumentar los ingresos.</strong> Todo empieza desde el primer contacto — si no identificamos las necesidades, la situación y las limitaciones del cliente, no podemos trabajar sobre el único indicador que importa: el hábito.', stat: true, statNum: '80%', statDesc: '<strong>de los abandonos</strong> ocurre durante los primeros 3 meses de vida del cliente' },
+        { label: '¿Qué debería hacer?', title: 'Detectar desde el primer día si el cliente es autónomo o está en riesgo', body: 'Hay dos perfiles: el <strong>cliente autónomo</strong> (tiene hábito, busca autonomía, no necesita seguimiento) y el <strong>cliente en riesgo</strong> (sin hábito, necesita acompañamiento). Destinar los recursos del staff exclusivamente a quienes más lo necesitan y crear un servicio personalizado para cada perfil.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Sin proceso de bienvenida digitalizado, el riesgo de abandono es invisible', body: 'Lo que ocurre en la mayoría de centros:', points: ['No tienen un <strong>proceso de bienvenida estandarizado</strong> ni digitalizado', 'Las interacciones dependen de <strong>las mismas personas</strong> — sin sistema escalable', 'No se identifica el perfil del cliente — <strong>todos reciben el mismo trato</strong>', 'El momento más crítico — los primeros 3 meses — <strong>pasa sin seguimiento</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Asistente virtual que identifica el riesgo y crea el seguimiento automático', tg: true, points: ['<strong>Asistente virtual de bienvenida</strong> que guía al cliente desde el primer momento', 'Identifica automáticamente el <strong>riesgo de abandono futuro</strong> con preguntas simples', 'Si riesgo alto: crea seguimiento personalizado y el cliente <strong>agenda cita desde la app</strong>', 'El entrenador recibe al cliente <strong>ya guiado y con toda la información</strong> necesaria', 'Si riesgo bajo: sugiere servicios y da <strong>autonomía total desde la app</strong>', 'Prioriza los recursos del staff <strong>donde más impacto generan</strong>'] }
+      ]
+    },
+    experiencia: {
+      ghost: '02', tag: 'Experiencia y seguimiento',
+      title: 'Expe<span class="cap-hl">riencia</span><br>y seguimiento',
+      kicker: 'La primera cita con el entrenador es el momento más importante — y el más desaprovechado.',
+      chapters: [
+        { label: 'La situación', title: 'Diseñar la experiencia del cliente desde la primera interacción', body: 'En la primera cita hay que diseñar cómo va a ser la experiencia del cliente dentro del centro. <strong>Personalizada pero escalable</strong> — ningún cliente es igual, pero el sistema tiene que poder con todos. El objetivo de los primeros 3 meses: que el cliente toque todos los servicios y encuentre su espacio.' },
+        { label: '¿Qué debería hacer?', title: 'Análisis, prescripción y nutrición — renovados en el tiempo', body: 'Tres servicios básicos en la primera interacción: <strong>análisis de composición corporal</strong> con báscula de bioimpedancia conectada, <strong>prescripción de actividad física</strong> que cubra todos los servicios del centro, y <strong>plan nutricional</strong> alineado con sus objetivos. Y renovarlos continuamente para que el cliente no se estanque.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Se hace una vez, con herramientas rudimentarias — y no se renueva', body: 'La realidad de la mayoría de centros:', points: ['Sin protocolo definido — <strong>cada entrenador lo hace a su manera</strong>', 'Solo una pequeña parte de los clientes <strong>pasan por ese proceso</strong>', 'Planes estándar para todos — <strong>sin personalización real</strong>', 'Herramientas rudimentarias — <strong>papel, plantillas genéricas</strong>, sin digitalización', 'Se hace una vez y no se renueva — <strong>el cliente se estanca y abandona</strong>', 'Planes nutricionales son de pago extra — <strong>casi nadie los usa</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Citas, prescripción, bioimpedancia y nutrición en una única plataforma', tg: true, points: ['<strong>Gestor de citas automatizado</strong> — el cliente elige fecha y hora desde la app', 'Prescripción de actividad física con <strong>plantillas semipersonalizadas o totalmente personalizadas</strong>', 'Integración con <strong>básculas de bioimpedancia</strong> del mercado + autopesaje autónomo', 'Autoasignación o creación de rutinas con <strong>histórico y estadísticas de progreso</strong>', '<strong>Servicio de dietas automatizado</strong> — el técnico asigna o el nutricionista gestiona todo', 'Se adapta al cliente con acompañamiento y al <strong>cliente autónomo</strong>'] }
+      ]
+    },
+    comunidad: {
+      ghost: '03', tag: 'Comunidad y premios',
+      title: 'Comuni<span class="cap-hl">dad</span><br>y premios',
+      kicker: 'Un cliente que pertenece a una comunidad multiplica por 6 su vida media.',
+      chapters: [
+        { label: 'La situación', title: 'La comunidad es el factor de fidelización más potente y más ignorado', body: 'Un cliente comprometido con su comunidad <strong>multiplica por 6 su vida media.</strong> Crear interacciones entre clientes mejora la experiencia, la permanencia y los ingresos — y convierte al cliente en embajador activo de tu marca hacia el exterior.', stat: true, statNum: 'x6', statDesc: '<strong>vida media del cliente</strong> cuando pertenece a una comunidad activa' },
+        { label: '¿Qué debería hacer?', title: 'Premiar los comportamientos beneficiosos y crear comunidad activa', body: 'Premiar de forma continua la <strong>asistencia, el feedback, los referidos y la permanencia</strong> con un sistema de puntos real y sostenido en el tiempo. Y crear comunidad donde los clientes conecten, compartan aficiones y se motiven entre sí — no solo actividades puntuales.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Retos puntuales que generan conflicto — y ninguna estrategia de comunidad', body: 'Lo que ocurre en la mayoría de centros:', points: ['Solo activan premios de forma <strong>puntual</strong> — sin sistema mantenido en el tiempo', 'Premiar solo a nuevos clientes <strong>genera conflicto con los socios más antiguos</strong>', '<strong>No se crean comunidades</strong> — el cliente no puede conectar con otros miembros', 'Se limita a actividades aisladas <strong>sin continuidad ni impacto real</strong>', 'Resultado: el cliente viene, entrena y se va — <strong>sin vínculo con el centro ni con nadie</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Gamificación completa + Gymder — la comunidad que retiene', tg: true, points: ['<strong>Gamificación continua</strong> — premia asistencia, feedback, referidos y permanencia', 'Sistema de <strong>puntos canjeables desde la app</strong> por premios configurados por el centro', '<strong>Gymder</strong> — comunidad que conecta clientes por aficiones, actividades e intereses', 'Fomenta amistades, interacción y <strong>compromiso entre clientes</strong>', 'Crea imagen de marca y comunidad que <strong>se vende al exterior y capta nuevos clientes</strong>', 'Retención <strong>6 veces superior</strong> a no tener servicio de comunidad'] }
+      ]
+    }
+  };
+
+  function fidOpenModal(key) {
+    const d = FID_DATA[key];
+    document.getElementById('fid-mghost').textContent = d.ghost;
+    document.getElementById('fid-mtag-txt').textContent = d.tag;
+    document.getElementById('fid-mtitle').innerHTML = d.title;
+    document.getElementById('fid-mkicker').textContent = d.kicker;
+    const right = document.getElementById('fid-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml   = c.body   ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml   = c.stat   ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}</div>`;
+    }).join('');
+    document.getElementById('fid-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fidCloseModal() {
+    document.getElementById('fid-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function fidOverlayClick(e) {
+    if (e.target === document.getElementById('fid-overlay')) fidCloseModal();
+  }
+
+  // ── INGRESOS MODAL DATA + FUNCTIONS ──
+  const ING_DATA = {
+    permanencia: {
+      ghost: '01', tag: 'Permanencia',
+      title: 'Perma<span class="cap-hl">nencia</span>',
+      kicker: 'Subir la cuota genera bajas. Aumentar la vida media genera ingresos sin ruido.',
+      resultNum: '+30%', resultDesc: 'de ingresos generado por <strong>mayor permanencia del cliente</strong>',
+      chapters: [
+        { label: 'La situación', title: 'El negocio fitness es recurrente — la permanencia es la palanca más poderosa', body: 'Subir la cuota mensual provoca ruido y riesgo de bajas. La estrategia inteligente es otra: <strong>hacer que el cliente dure más.</strong> Cada mes adicional de vida media es ingreso puro sin coste de captación.' },
+        { label: '¿Qué debería hacer?', title: 'Activar las palancas que multiplican la vida media', body: 'Los datos son claros — cada acción tiene un impacto medible:', statsGrid: [{ num: 'x6', desc: '<strong>vida media</strong> entrenando con un amigo' }, { num: '+160%', desc: '<strong>vida media</strong> con +2 interacciones staff/mes' }, { num: '+400%', desc: '<strong>vida media</strong> con servicio de composición corporal' }, { num: '+200%', desc: '<strong>vida media</strong> con NPS superior a 75' }, { num: '+100%', desc: '<strong>vida media</strong> con sistema de reservas social' }, { num: '+40%', desc: '<strong>vida media</strong> usando app y tecnología de seguimiento' }] },
+        { label: '¿Cuál es tu dificultad?', title: 'No ven la conexión entre cada acción y sus ingresos', body: 'El error más común de los negocios fitness:', points: ['No ven la importancia de fomentar una <strong>comunidad</strong> en su negocio', 'No tienen un proceso de bienvenida <strong>enfocado y personalizado</strong> por perfil', 'No invierten en tecnología que fomente las <strong>interacciones con el staff</strong>', 'No relacionan el <strong>número de asistencia con la vida media</strong> del cliente', 'No ven que las encuestas contienen <strong>respuestas que mejoran sus ingresos</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Un ecosistema completo que activa todas las palancas de permanencia', tg: true, points: ['<strong>Sistema de referidos y comunidad</strong> que premia entrenar acompañado', '<strong>Proceso de bienvenida</strong> segmentado y personalizado por perfil de riesgo', 'Ecosistema de interacción <strong>cliente-entrenador-staff-dirección</strong> más simple y fluido', 'Herramientas fitness top: <strong>bioimpedancia, autopesaje</strong> y conexión con maquinaria', '<strong>Módulo de reservas</strong> con visibilidad social que aumenta la asistencia', '<strong>KPIs de negocio</strong> para actuar con estrategia y crear efecto WOW'] }
+      ]
+    },
+    upselling: {
+      ghost: '02', tag: 'Upselling',
+      title: 'Up<span class="cap-hl">selling</span>',
+      kicker: 'Del acceso básico al servicio premium — un camino natural que el cliente recorre solo.',
+      resultNum: '+5%', resultDesc: 'de ingresos adicionales con una <strong>estrategia de upselling bien activada</strong>',
+      chapters: [
+        { label: 'La situación', title: 'Dos niveles de producto — el modelo que ya funciona en otras industrias', body: 'La industria aérea lleva décadas haciéndolo: tarifa básica de entrada para captar, y niveles superiores con más servicios para quien quiere más. <strong>Los negocios fitness tienen que aprender de ese modelo</strong> — crear escalones de valor que el cliente suba de forma natural.' },
+        { label: '¿Qué debería hacer?', title: 'Cuota básica de acceso + cuota premium con servicios adicionales', body: 'Estructurar la oferta en dos niveles: <strong>cuota de acceso</strong> que facilita la captación, y <strong>cuota premium</strong> con servicios adicionales para el cliente que quiere más. En ese camino de mejora, el cliente va consolidando el hábito y fidelizándose — el upselling y la retención se retroalimentan.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Sin sistema ni estrategia — tarifa plana para todos', body: 'Por qué los negocios fitness no lo hacen:', points: ['No tienen sistema para <strong>diferenciar tarifas por niveles de servicio</strong>', 'Falta de <strong>metodología y estrategia</strong> para estructurar su oferta de producto', 'No tienen los <strong>servicios suficientes</strong> para justificar una cuota premium', 'Resultado: <strong>tarifa plana para todos</strong> — sin camino de upselling posible'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Configuración de producto por perfil + web optimizada para vender más', tg: true, points: ['<strong>Configuración de productos por perfil</strong> — muestra cada tarifa según lo que el cliente tiene', '<strong>Página web optimizada para el upselling</strong> — diseñada para que el cliente elija siempre la opción de mayor valor', '<strong>Campañas de marketing</strong> para publicitar nuevos servicios a clientes actuales', 'Herramientas de <strong>acción de upselling</strong> dirigidas a la base de clientes existente'] }
+      ]
+    },
+    crosselling: {
+      ghost: '03', tag: 'Cross-selling',
+      title: 'Cross-<span class="cap-hl">selling</span>',
+      kicker: 'Solo el 1-5% de tus clientes usa los servicios extra. El problema no es el servicio — es el acceso.',
+      resultNum: '+5%', resultDesc: 'de ingresos adicionales con servicios complementarios <strong>fáciles de comprar</strong>',
+      chapters: [
+        { label: 'La situación', title: 'Ingresos extra que ya tienes — pero que nadie está comprando', body: 'El cross-selling es vender servicios adicionales al cliente que ya tienes. Servicios con margen real: <strong>entrenamiento personal, nutrición, masterclasses, clases fuera de cuota.</strong> El potencial está ahí — el problema es que nadie los compra porque nadie los encuentra.' },
+        { label: '¿Qué debería hacer?', title: 'Servicios complementarios fáciles de comprar con buena experiencia', body: 'La clave no es tener más servicios — es que sean <strong>fáciles de contratar</strong> y generen una buena experiencia. Si el proceso de compra es complejo, el cliente no lo hace. Si la experiencia es mala, no repite. Si el servicio es invisible, nadie lo descubre.' },
+        { label: '¿Cuál es tu dificultad?', title: 'Servicios infrautilizados que no justifican invertir en promocionarlos', body: 'El círculo vicioso de la mayoría de negocios fitness:', points: ['Los servicios existen pero <strong>no son de fácil acceso</strong> para el cliente', 'El uso es tan bajo que <strong>no justifica invertir en marketing</strong> para promocionarlos', 'Sin inversión en comunicación, el uso sigue siendo mínimo — <strong>el círculo no se rompe</strong>', 'Nutrición usada por el <strong>5% de los clientes</strong>', 'Entrenamiento personal usado por el <strong>1% de los clientes</strong>'] },
+        { label: 'Cómo lo resuelve Trainingym', title: 'Crea, vende, comunica y mejora tus servicios extra desde una plataforma', tg: true, points: ['Sistema de nutrición <strong>monetizable desde la misma plataforma</strong>', '<strong>Free trials</strong> de servicios de cross-selling para activar el primer uso', 'Herramientas para <strong>publicitar y anunciar</strong> los servicios complementarios', '<strong>Comunicación directa</strong> con los clientes para promocionar servicios extra', 'Recopilación de <strong>feedback de clientes</strong> sobre cada servicio para mejorarlo continuamente'] }
+      ]
+    }
+  };
+
+  function ingOpenModal(key) {
+    const d = ING_DATA[key];
+    document.getElementById('ing-mghost').textContent = d.ghost;
+    document.getElementById('ing-mtag-txt').textContent = d.tag;
+    document.getElementById('ing-mtitle').innerHTML = d.title;
+    document.getElementById('ing-mkicker').textContent = d.kicker;
+    document.getElementById('ing-result-num').textContent = d.resultNum;
+    document.getElementById('ing-result-desc').innerHTML = d.resultDesc;
+    const right = document.getElementById('ing-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml   = c.body       ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points     ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml   = c.stat       ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      const gridHtml   = c.statsGrid  ? `<div class="ing-stats-grid">${c.statsGrid.map(s=>`<div class="ing-stat-item"><span class="ing-stat-num">${s.num}</span><span class="ing-stat-desc">${s.desc}</span></div>`).join('')}</div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}${gridHtml}</div>`;
+    }).join('');
+    document.getElementById('ing-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function ingCloseModal() {
+    document.getElementById('ing-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function ingOverlayClick(e) {
+    if (e.target === document.getElementById('ing-overlay')) ingCloseModal();
+  }
+
+  // Cerrar modales con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      ['cap','tiem','fid','ing'].forEach(p => {
+        const ov = document.getElementById(p + '-overlay');
+        if (ov && ov.classList.contains('open')) {
+          window[p + 'CloseModal']();
+        }
+      });
+    }
+  });
+  </script>
+
+</body>
+</html>
