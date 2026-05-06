@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Las 4 palancas del negocio fitness · Trainingym</title>
+  <meta name="description" content="Las 4 palancas que hacen crecer un negocio fitness: Captación, Ahorro de tiempo, Fidelización e Ingresos.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --orange: #ED6845;
+      --grafito: #1D1D1B;
+      --petrol: #293138;
+      --gris: #F2F3F7;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Host Grotesk', system-ui, sans-serif;
+      background: #0e0e0c;
+      color: #fff;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ─── Top bar ─── */
+    .topbar {
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .topbar-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .topbar img { height: 26px; width: auto; }
+    .topbar a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      transition: color 0.15s;
+      padding-top: 4px;
+    }
+    .topbar a:hover { color: var(--orange); }
+
+    /* Botón "Inicio" debajo del logo */
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.6);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      opacity: 1;
+    }
+    .home-btn:hover {
+      background: rgba(237,104,69,0.10);
+      border-color: rgba(237,104,69,0.5);
+      color: var(--orange);
+    }
+    .home-btn svg { display: block; }
+    /* En home-mode el botón queda oculto (no tiene sentido volver a la home si ya estás) */
+    body.home-mode .home-btn {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+    }
+    .home-btn {
+      transition: opacity 0.25s ease, transform 0.25s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    /* ─── Sección metodología — ocupa el viewport completo ─── */
+    .methodology-section {
+      min-height: calc(100vh - 60px); /* viewport menos topbar */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-bottom: 1.5rem;
+    }
+
+    /* ═══ HOME MODE: vista inicial con solo título + línea con puntos ═══ */
+    /* Cuando .palancas-grid tiene .home-mode, los tabs se ocultan
+       y todas las palancas se muestran en formato ULTRA-compacto:
+       solo el nombre + un punto en la línea naranja horizontal */
+    body.home-mode .palanca-tabs {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      max-height: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      transition: opacity 0.3s ease;
+    }
+    body.home-mode .hero {
+      padding: 3rem 1.5rem 1rem;
+      transition: padding 0.4s ease;
+    }
+    body.home-mode .hero h1 {
+      font-size: clamp(30px, 4.5vw, 48px);
+      transition: font-size 0.4s ease;
+    }
+    /* El grid en home: una línea horizontal continua con los 4 nombres */
+    body.home-mode .palancas-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 0 !important;
+      position: relative;
+      max-width: 1400px;
+      margin: 3rem auto 0;
+      padding: 0 3rem;
+    }
+    /* Línea horizontal naranja conectando los 4 puntos */
+    body.home-mode .palancas-grid::before {
+      content: '';
+      position: absolute;
+      top: 48px;
+      left: calc(3rem + 12.5%);
+      right: calc(3rem + 12.5%);
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, #ED6845 8%, #ED6845 92%, transparent 100%);
+    }
+    /* En home, todas las palancas son "tarjetas planas" */
+    body.home-mode .palanca-col {
+      background: transparent !important;
+      border-radius: 0;
+      cursor: pointer;
+      padding: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 1 !important;
+    }
+    body.home-mode .palanca-col:hover {
+      transform: translateY(-4px);
+    }
+    body.home-mode .palanca-col .palanca-head,
+    body.home-mode .palanca-col .palanca-mini-stat,
+    body.home-mode .palanca-col .palanca-body,
+    body.home-mode .palanca-col .cap-embed {
+      display: none !important;
+    }
+    /* Insertamos los nodos de la línea + nombres con pseudo-elementos */
+    body.home-mode .palanca-col {
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 88px !important;
+    }
+    /* Punto/nodo en la línea */
+    body.home-mode .palanca-col::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1D1D1B;
+      border: 3px solid #ED6845;
+      transition: all 0.25s ease;
+      z-index: 1;
+    }
+    body.home-mode .palanca-col:hover::before {
+      background: #ED6845;
+      transform: translateX(-50%) scale(1.18);
+      box-shadow: 0 0 26px rgba(237,104,69,0.65);
+    }
+    /* Nombre de la palanca debajo del punto */
+    body.home-mode .palanca-col::after {
+      content: attr(data-name);
+      position: absolute;
+      top: 88px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: clamp(20px, 2vw, 26px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      transition: color 0.2s ease;
+    }
+    body.home-mode .palanca-col:hover::after {
+      color: var(--orange);
+    }
+
+    /* Botón CTA "ver palanca" debajo del nombre, dentro de cada col */
+    body.home-mode .palanca-home-cta {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 8px;
+      margin-top: 170px;
+      padding: 14px 26px;
+      background: rgba(237,104,69,0.08);
+      border: 1.5px solid rgba(237,104,69,0.4);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    body.home-mode .palanca-col:hover .palanca-home-cta {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      box-shadow: 0 6px 20px rgba(237,104,69,0.35);
+    }
+    .palanca-home-cta { display: none; }
+
+    /* Hint global debajo de la línea */
+    .home-hint {
+      display: none;
+      text-align: center;
+      margin: 0 auto 2rem;
+      max-width: 600px;
+      padding: 0 1.5rem;
+      color: rgba(255,255,255,0.45);
+      font-size: 13px;
+      font-style: italic;
+      letter-spacing: 0.2px;
+    }
+    body.home-mode .home-hint { display: block; }
+    body.home-mode .scroll-hint { display: none; }
+    body.home-mode .cta-section { display: none; }
+    body.home-mode .methodology-section { padding-bottom: 0; }
+
+    /* Mobile home: vertical line en lugar de horizontal */
+    @media (max-width: 760px) {
+      body.home-mode .hero {
+        padding: 2rem 1.25rem 1rem;
+      }
+      body.home-mode .hero h1 {
+        font-size: clamp(26px, 6vw, 32px);
+      }
+      body.home-mode .palancas-grid {
+        grid-template-columns: 1fr !important;
+        max-width: 480px;
+        padding: 0 1.5rem;
+        margin-top: 1.5rem;
+      }
+      body.home-mode .palancas-grid::before {
+        top: 0;
+        bottom: 0;
+        left: calc(1.5rem + 17px);
+        right: auto;
+        width: 3px;
+        height: auto;
+        background: linear-gradient(180deg, transparent 0%, #ED6845 8%, #ED6845 92%, transparent 100%);
+      }
+      body.home-mode .palanca-col {
+        flex-direction: row;
+        min-height: 0;
+        padding: 22px 0 22px 56px !important;
+        align-items: center;
+        text-align: left;
+      }
+      body.home-mode .palanca-col::before {
+        top: 50%;
+        left: 4px;
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+        border-width: 3px;
+      }
+      body.home-mode .palanca-col:hover::before {
+        transform: translateY(-50%) scale(1.15);
+      }
+      body.home-mode .palanca-col::after {
+        position: static;
+        text-align: left;
+        font-size: 19px;
+        flex: 1;
+        margin-right: 12px;
+      }
+      body.home-mode .palanca-home-cta {
+        margin-top: 0;
+        margin-left: auto;
+        font-size: 11px;
+        padding: 9px 16px;
+        letter-spacing: 1px;
+      }
+      .home-hint { font-size: 13px; padding-top: 1rem; }
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 1.75rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin: 0;
+    }
+    .hero h1 strong { color: var(--orange); font-weight: 800; }
+
+    /* ─── Selector de palanca (botones arriba) ─── */
+    .palanca-tabs {
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+    .palanca-tab {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.72);
+      padding: 1rem 1rem;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+    .palanca-tab:hover {
+      background: rgba(237,104,69,0.10);
+      border-color: rgba(237,104,69,0.45);
+      color: #fff;
+    }
+    .palanca-tab.on {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(237,104,69,0.32);
+    }
+    .palanca-tab-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    @media (max-width: 760px) {
+      .palanca-tabs {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #0e0e0c;
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .palanca-tab {
+        padding: 0.7rem 0.5rem;
+        font-size: 12.5px;
+      }
+      .palanca-tab-name { font-size: 12.5px; }
+    }
+    @media (max-width: 480px) {
+      .palanca-tabs {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+      }
+      .palanca-tab {
+        padding: 0.6rem 0.4rem;
+      }
+      .palanca-tab-name { font-size: 12px; }
+    }
+
+    /* ─── Contenedor principal con las 4 palancas en línea ─── */
+    .palancas-row {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+    .palancas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      transition: grid-template-columns 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Modos zoom: una palanca grande, otras pequeñas */
+    .palancas-grid.zoom-cap   { grid-template-columns: 4fr 1fr 1fr 1fr; }
+    .palancas-grid.zoom-tiem  { grid-template-columns: 1fr 4fr 1fr 1fr; }
+    .palancas-grid.zoom-fid   { grid-template-columns: 1fr 1fr 4fr 1fr; }
+    .palancas-grid.zoom-ing   { grid-template-columns: 1fr 1fr 1fr 4fr; }
+    @media (max-width: 1100px) {
+      /* En móvil la metodología NO se fuerza a 100vh — las 4 palancas se apilan */
+      .methodology-section {
+        min-height: 0;
+        display: block;
+        padding-bottom: 0;
+      }
+      .scroll-hint { display: none; }
+
+      .palancas-grid,
+      .palancas-grid.zoom-cap,
+      .palancas-grid.zoom-tiem,
+      .palancas-grid.zoom-fid,
+      .palancas-grid.zoom-ing {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      /* En móvil/tablet, TODAS las palancas se muestran expandidas (no hay modo compacto) */
+      .palancas-grid[class*="zoom-"] .palanca-col:not(.active) {
+        opacity: 1;
+      }
+      .palanca-col:not(.active) .cap-h-line { display: block; }
+      .palanca-col:not(.active) .cap-tl-wrap { padding: 0 32px; }
+      .palanca-col:not(.active) .cap-timeline {
+        flex-direction: column;
+        min-height: 0;
+        gap: 0;
+      }
+      .palanca-col:not(.active) .cap-item {
+        padding: 16px 18px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        flex: none;
+      }
+      .palanca-col:not(.active) .cap-item:hover {
+        flex: none;
+        background: rgba(237,104,69,0.05);
+      }
+      .palanca-col:not(.active) .cap-kicker {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .palanca-col:not(.active) .cap-sep {
+        display: block;
+        width: 24px;
+        margin: 9px 0;
+      }
+      .palanca-col:not(.active) .cap-headline {
+        display: block;
+        max-height: none;
+        opacity: 1;
+        transform: none;
+        font-size: 12.5px;
+        margin-bottom: 5px;
+      }
+      .palanca-col:not(.active) .cap-desc {
+        display: block;
+        max-height: none;
+        opacity: 1;
+        font-size: 11px;
+      }
+      .palanca-col:not(.active) .cap-hint {
+        display: flex;
+        opacity: 1;
+        margin-top: 9px;
+      }
+      .palanca-col:not(.active) .cap-ft {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .palanca-col:not(.active) .palanca-zoom-hint { display: none; }
+      .palanca-col:not(.active) .palanca-mini-stat { display: none; }
+      .palanca-col:not(.active) .cap-embed::after { display: block; }
+    }
+    /* Móvil estricto: cap-ft más legible */
+    @media (max-width: 760px) {
+      .cap-ft {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 14px 16px;
+      }
+      .cap-ft-arrow { margin: 0 6px; font-size: 10px; }
+      .cap-ft-label { font-size: 9.5px; letter-spacing: 1.2px; }
+      .cap-ft-eq { margin: 0 8px; }
+      .cap-ft-goal { padding: 6px 12px; }
+      .cap-ft-num { font-size: 16px; }
+      .cap-tl-wrap { padding: 0 16px !important; }
+      .cap-h-line { display: none; }
+      .cap-item { padding: 14px 4px !important; }
+    }
+
+    /* ─── Cada palanca ─── */
+    .palanca-col {
+      background: #1D1D1B;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+    /* En modo "zoom-X" las que NO son la activa se atenúan */
+    .palancas-grid[class*="zoom-"] .palanca-col:not(.active) {
+      opacity: 0.52;
+    }
+    .palancas-grid[class*="zoom-"] .palanca-col:not(.active):hover {
+      opacity: 0.85;
+    }
+    .palanca-col.active { cursor: default; }
+
+    /* Cabecera de cada palanca */
+    .palanca-head {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: rgba(0,0,0,0.18);
+    }
+    .palanca-head-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #fff;
+      text-transform: none;
+    }
+    .palanca-head-num {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+    .palanca-col.active .palanca-head-name { color: var(--orange); }
+
+    /* Contenido — modo COMPACTO (no zoom) */
+    .palanca-body {
+      position: relative;
+      transition: opacity 0.3s ease;
+    }
+    .palanca-col:not(.active) .cap-embed-inner {
+      padding: 0.8rem 0.85rem;
+    }
+    .palanca-col:not(.active) .cap-h-line { display: none; }
+    .palanca-col:not(.active) .cap-tl-wrap { padding: 0; }
+    .palanca-col:not(.active) .cap-timeline {
+      flex-direction: column;
+      min-height: 0;
+      gap: 0;
+    }
+    .palanca-col:not(.active) .cap-item {
+      padding: 0.55rem 0;
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      flex: none;
+    }
+    .palanca-col:not(.active) .cap-item:last-child { border-bottom: none; }
+    .palanca-col:not(.active) .cap-item:hover { flex: none; background: transparent; }
+    .palanca-col:not(.active) .cap-kicker {
+      font-size: 11.5px;
+      line-height: 1.35;
+    }
+    .palanca-col:not(.active) .cap-sep,
+    .palanca-col:not(.active) .cap-headline,
+    .palanca-col:not(.active) .cap-desc,
+    .palanca-col:not(.active) .cap-hint,
+    .palanca-col:not(.active) .cap-ft {
+      display: none;
+    }
+    .palanca-col:not(.active) .cap-embed::after { display: none; }
+
+    /* Hint para palancas no expandidas */
+    .palanca-col:not(.active) .palanca-zoom-hint {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(237,104,69,0.15);
+      text-align: center;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .palanca-col:not(.active):hover .palanca-zoom-hint { opacity: 1; }
+    .palanca-col.active .palanca-zoom-hint { display: none; }
+
+    /* Footer info para vista compacta */
+    .palanca-mini-stat {
+      display: none;
+      padding: 0.55rem 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(237,104,69,0.05);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--orange);
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .palanca-col:not(.active) .palanca-mini-stat { display: block; }
+
+    /* Wrapper para la versión expandida — usa el CSS original .cap-* */
+    .palanca-col.active .cap-embed {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .cap-embed {
+      font-family:'Host Grotesk',system-ui,sans-serif;
+      background:#1D1D1B;
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      position:relative;
+    }
+    .cap-embed::after {
+      content:''; position:absolute; inset:0;
+      background-image:radial-gradient(rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size:44px 44px; pointer-events:none; z-index:0;
+    }
+
+    /* header */
+    .cap-hd {
+      display:flex; align-items:center; justify-content:center;
+      padding:14px 32px; border-bottom:1px solid rgba(255,255,255,.04);
+      position:relative; z-index:2;
+    }
+    .cap-hd-title {
+      font-size:11px; font-weight:600; color:rgba(255,255,255,.6);
+      letter-spacing:5px; text-transform:uppercase;
+    }
+    .cap-hd-title span { color:#ED6845; }
+
+    /* timeline wrapper */
+    .cap-tl-wrap {
+      position:relative; z-index:2;
+      padding:0 32px;
+    }
+    .cap-h-line {
+      width:100%; height:2px;
+      background:linear-gradient(90deg, transparent 0%, #ED6845 6%, #ED6845 94%, transparent 100%);
+      position:relative; flex-shrink:0; margin:0;
+    }
+    .cap-h-line::before, .cap-h-line::after {
+      content:''; position:absolute;
+      width:10px; height:10px;
+      background:#1D1D1B; border:2px solid #ED6845;
+      border-radius:50%; top:50%; transform:translateY(-50%);
+    }
+    .cap-h-line::before { left:calc(12.5% - 5px); }
+    .cap-h-line::after  { right:calc(12.5% - 5px); }
+    .cap-dot-2 { position:absolute; width:10px; height:10px; background:#1D1D1B; border:2px solid #ED6845; border-radius:50%; top:50%; transform:translateY(-50%); left:calc(37.5% - 5px); }
+    .cap-dot-3 { position:absolute; width:10px; height:10px; background:#1D1D1B; border:2px solid #ED6845; border-radius:50%; top:50%; transform:translateY(-50%); left:calc(62.5% - 5px); }
+
+    .cap-timeline { display:flex; align-items:stretch; min-height:220px; }
+    .cap-item {
+      flex:1; padding:28px 28px 22px;
+      border-right:1px solid rgba(255,255,255,.05);
+      cursor:pointer; position:relative; overflow:hidden;
+      transition: flex 0.5s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
+    }
+    .cap-item:last-child { border-right:none; }
+    .cap-item:hover { flex:1.7; background:rgba(237,104,69,.07); }
+    .cap-timeline:has(.cap-item:hover) .cap-item:not(:hover) {
+      opacity:0.38;
+      transition:opacity 0.3s ease, flex 0.5s cubic-bezier(0.16,1,0.3,1), background 0.35s ease;
+    }
+    .cap-item::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+      background:#ED6845; transform:scaleX(0); transform-origin:left;
+      transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .cap-item:hover::after { transform:scaleX(1); }
+
+    .cap-kicker {
+      font-size:clamp(13px,1.3vw,18px); font-weight:500;
+      color:rgba(255,255,255,.72); line-height:1.4;
+    }
+    .cap-kicker .cap-hl { color:#ED6845; font-weight:700; }
+
+    .cap-sep {
+      width:0; height:1.5px; background:rgba(237,104,69,.2);
+      margin:11px 0; transition:width 0.35s cubic-bezier(0.16,1,0.3,1) 0.05s;
+    }
+    .cap-item:hover .cap-sep { width:24px; }
+
+    .cap-headline {
+      font-size:clamp(11px,1vw,14px); font-weight:700;
+      color:#fff; line-height:1.2; letter-spacing:-0.2px;
+      max-height:0; overflow:hidden; opacity:0; transform:translateY(8px);
+      transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1) 0.08s,
+                  opacity 0.35s ease 0.15s, transform 0.4s ease 0.1s;
+    }
+    .cap-item:hover .cap-headline { max-height:80px; opacity:1; transform:translateY(0); margin-bottom:6px; }
+
+    .cap-desc {
+      font-size:clamp(9.5px,0.8vw,11px); font-weight:300; font-style:italic;
+      color:rgba(255,255,255,.45); line-height:1.6;
+      max-height:0; overflow:hidden; opacity:0;
+      transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1) 0.18s, opacity 0.35s ease 0.22s;
+    }
+    .cap-item:hover .cap-desc { max-height:80px; opacity:1; }
+
+    .cap-hint { display:flex; align-items:center; gap:6px; margin-top:10px; opacity:0; transition:opacity 0.3s ease 0.35s; }
+    .cap-item:hover .cap-hint { opacity:1; }
+    .cap-hint-line { width:14px; height:1px; background:rgba(237,104,69,.35); }
+    .cap-hint-txt { font-size:8.5px; font-weight:500; color:#ED6845; letter-spacing:2.5px; text-transform:uppercase; }
+
+    /* footer */
+    .cap-ft {
+      display:flex; align-items:center; justify-content:center;
+      gap:0; padding:10px 32px;
+      border-top:1px solid rgba(255,255,255,.04);
+      position:relative; z-index:2;
+    }
+    .cap-ft-label { font-size:10px; font-weight:600; color:rgba(255,255,255,.28); letter-spacing:2px; text-transform:uppercase; flex-shrink:0; }
+    .cap-ft-arrow { font-size:11px; color:rgba(255,255,255,.18); margin:0 12px; flex-shrink:0; }
+    .cap-ft-eq { font-size:15px; font-weight:600; color:#ED6845; opacity:.7; margin:0 14px; flex-shrink:0; }
+    .cap-ft-goal { display:flex; align-items:center; gap:10px; background:rgba(237,104,69,.08); border:1px solid rgba(237,104,69,.35); border-left:3px solid #ED6845; padding:6px 18px; flex-shrink:0; }
+    .cap-ft-num { font-size:18px; font-weight:800; color:#ED6845; line-height:1; }
+    .cap-ft-desc { font-size:9px; font-weight:600; color:rgba(237,104,69,.75); letter-spacing:2px; text-transform:uppercase; line-height:1.35; }
+
+    /* ── Captación modal overlay ── */
+    .cap-overlay {
+      position:fixed; inset:0; z-index:500;
+      background:rgba(10,10,8,.9);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none;
+      transition:opacity 0.3s ease;
+      backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px);
+    }
+    .cap-overlay.open { opacity:1; pointer-events:all; }
+    .cap-modal {
+      width:92vw; max-width:1180px;
+      background:#232321;
+      border:1px solid rgba(255,255,255,.06);
+      display:grid; grid-template-columns:32% 1px 1fr;
+      position:relative; overflow:hidden;
+      transform:scale(0.95) translateY(16px);
+      transition:transform 0.45s cubic-bezier(0.16,1,0.3,1);
+      max-height:88vh; font-family:'Host Grotesk',system-ui,sans-serif;
+      border-radius:6px;
+    }
+    .cap-overlay.open .cap-modal { transform:scale(1) translateY(0); }
+    .cap-modal::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:#ED6845; z-index:2; }
+    .cap-modal::after { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.02) 1px,transparent 1px); background-size:36px 36px; pointer-events:none; }
+    .cap-close { position:absolute; top:18px; right:22px; width:32px; height:32px; border:1px solid rgba(255,255,255,.12); background:transparent; color:rgba(255,255,255,.4); border-radius:50%; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:border-color .2s,color .2s,background .2s; z-index:10; font-family:'Host Grotesk',sans-serif; }
+    .cap-close:hover { border-color:#ED6845; color:#ED6845; background:rgba(237,104,69,.08); }
+    .cap-mleft { position:relative; z-index:1; padding:54px 40px 44px 52px; display:flex; flex-direction:column; justify-content:center; gap:14px; overflow:hidden; }
+    .cap-mghost { position:absolute; bottom:-20px; left:-12px; font-size:200px; font-weight:800; line-height:1; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.05); pointer-events:none; user-select:none; letter-spacing:-12px; }
+    .cap-mtag { display:flex; align-items:center; gap:10px; }
+    .cap-mtag-line { width:22px; height:2px; background:#ED6845; }
+    .cap-mtag-txt { font-size:10px; font-weight:700; color:#ED6845; letter-spacing:4.5px; text-transform:uppercase; }
+    .cap-mtitle { font-size:clamp(32px, 3.6vw, 52px); font-weight:800; color:#fff; line-height:1.0; letter-spacing:-1.8px; }
+    .cap-mtitle .cap-hl { color:#ED6845; }
+    .cap-mkicker { font-size:14px; font-weight:300; font-style:italic; color:rgba(255,255,255,.55); line-height:1.65; max-width:280px; }
+    .cap-mdiv { background:linear-gradient(to bottom, transparent 5%, rgba(237,104,69,.2) 25%, rgba(237,104,69,.2) 75%, transparent 95%); }
+    .cap-mright { position:relative; z-index:1; padding:50px 50px 46px 46px; display:flex; flex-direction:column; gap:0; overflow-y:auto; scrollbar-width:thin; scrollbar-color:rgba(237,104,69,.25) transparent; }
+    .cap-mright::-webkit-scrollbar { width:4px; }
+    .cap-mright::-webkit-scrollbar-thumb { background:rgba(237,104,69,.25); border-radius:2px; }
+
+    /* Capítulo "La realidad del centro" — más serio */
+    .cap-chapter { padding:24px 0; border-bottom:1px solid rgba(255,255,255,.06); display:flex; flex-direction:column; gap:10px; }
+    .cap-chapter:first-child { padding-top:4px; }
+    .cap-chapter:last-child { border-bottom:none; padding-bottom:4px; }
+    .cap-ch-label { font-size:10px; font-weight:700; color:#ED6845; letter-spacing:3.5px; text-transform:uppercase; margin-bottom:2px; }
+
+    /* Capítulo "Cómo lo resuelve Trainingym" — destacado en naranja */
+    .cap-chapter.cap-tg {
+      background:linear-gradient(135deg, rgba(237,104,69,0.06) 0%, rgba(237,104,69,0.02) 100%);
+      margin:14px -22px -4px;
+      padding:22px 22px 22px;
+      border-radius:6px;
+      border:1px solid rgba(237,104,69,0.18);
+    }
+    .cap-chapter.cap-tg .cap-ch-label { color:#fff; background:#ED6845; padding:4px 11px; width:fit-content; font-size:9.5px; letter-spacing:2.8px; border-radius:99px; }
+    .cap-ch-title { font-size:clamp(16px, 1.4vw, 20px); font-weight:700; color:#fff; line-height:1.25; letter-spacing:-0.3px; }
+    .cap-ch-body { font-size:clamp(13px, 1vw, 14.5px); font-weight:400; color:rgba(255,255,255,.65); line-height:1.65; margin:0; }
+    .cap-ch-body strong { color:#fff; font-weight:600; }
+    .cap-ch-bullets { list-style:none; padding:0; display:flex; flex-direction:column; gap:8px; margin:6px 0 0; }
+    .cap-ch-bullets li { display:flex; align-items:flex-start; gap:11px; font-size:clamp(13px, 1vw, 14.5px); font-weight:400; color:rgba(255,255,255,.7); line-height:1.55; }
+    .cap-ch-bullets li::before { content:''; width:6px; height:6px; border-radius:50%; background:#ED6845; flex-shrink:0; margin-top:7px; }
+    .cap-ch-bullets li strong { color:#fff; font-weight:600; }
+    .cap-stat { display:inline-flex; align-items:center; gap:12px; background:rgba(237,104,69,.10); border:1px solid rgba(237,104,69,.28); padding:11px 17px; margin-top:8px; width:fit-content; border-radius:4px; }
+    .cap-stat-n { font-size:28px; font-weight:800; color:#ED6845; line-height:1; }
+    .cap-stat-d { font-size:12px; color:rgba(255,255,255,.55); line-height:1.45; }
+    .cap-stat-d strong { color:#fff; font-weight:600; }
+
+    /* Stats grid (en chapter de Permanencia) */
+    .ing-stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+    .ing-stat-item { background:rgba(237,104,69,.08); border:1px solid rgba(237,104,69,.22); padding:12px 16px; display:flex; flex-direction:column; gap:4px; border-radius:4px; }
+    .ing-stat-num { font-size:24px; font-weight:800; color:#ED6845; line-height:1; }
+    .ing-stat-desc { font-size:12px; color:rgba(255,255,255,.55); line-height:1.45; }
+    .ing-stat-desc strong { color:#fff; font-weight:600; }
+
+    /* Modal responsive — móvil en una columna */
+    @media (max-width: 880px) {
+      .cap-modal {
+        grid-template-columns: 1fr;
+        max-height: 92vh;
+      }
+      .cap-mdiv { display: none; }
+      .cap-mleft { padding: 32px 24px 22px; gap: 10px; }
+      .cap-mleft::after {
+        content:''; position:absolute; bottom:0; left:24px; right:24px; height:1px;
+        background:linear-gradient(90deg, transparent, rgba(237,104,69,.3), transparent);
+      }
+      .cap-mghost { font-size: 130px; bottom:-12px; left:-6px; }
+      .cap-mright { padding: 24px 24px 28px; }
+      .cap-chapter { padding: 18px 0; }
+      .cap-chapter.cap-tg { margin:14px -10px -4px; padding:18px 16px; }
+    }
+
+    /* placeholder palanca panels */
+    .palanca-coming { background:var(--surface); border:0.5px dashed var(--border-mid); border-radius:var(--radius-lg); padding:2.5rem; text-align:center; color:var(--text-muted); font-size:13px; font-style:italic; }
+
+    /* ── Demo funcio shared CSS ── */
+    .demo-wrap{font-family:'Host Grotesk',system-ui,sans-serif;background:var(--gris);color:var(--grafito);line-height:1.6;border-radius:var(--radius-lg);overflow:hidden;}
+    .demo-header-block{background:var(--petrol);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:1.5rem 1.75rem 1.75rem;margin-bottom:1.5rem;}
+    .demo-header-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem;}
+
+    /* Footer */
+    .footer-bottom {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-bottom a { color: var(--orange); text-decoration: none; }
+
+    /* CTA al final */
+    .cta-section {
+      max-width: 900px;
+      margin: 1rem auto 4rem;
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, rgba(237,104,69,0.10) 0%, rgba(237,104,69,0.03) 100%);
+      border: 1px solid rgba(237,104,69,0.25);
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    /* Scroll hint que invita a bajar al CTA */
+    .scroll-hint {
+      max-width: 1100px;
+      margin: 0.5rem auto 0;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .scroll-hint:hover { color: var(--orange); }
+    .scroll-hint-arrow {
+      font-size: 14px;
+      animation: bounce 1.8s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    .cta-section h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      margin: 0 0 0.6rem;
+      color: #fff;
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+      margin: 0 0 1.5rem;
+      line-height: 1.55;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      text-decoration: none;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14.5px;
+      box-shadow: 0 4px 14px rgba(237,104,69,0.35);
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .cta-btn:hover { box-shadow: 0 6px 18px rgba(237,104,69,0.42); }
+    .cta-btn:active { transform: scale(0.97); }
+
+    /* Mobile fixes */
+    @media (max-width: 760px) {
+      .topbar { padding: 0.7rem 1rem; }
+      .topbar img { height: 22px; }
+      .topbar a { font-size: 11px; }
+      .hero { padding: 1.75rem 1.25rem 1.25rem; }
+      .hero h1 { font-size: clamp(28px, 8vw, 38px); letter-spacing: -1px; }
+      .palancas-row { padding: 0 1rem 2rem; }
+      .palancas-grid { gap: 0.85rem; }
+
+      /* CTA section adaptado a móvil */
+      .cta-section {
+        margin: 0.5rem 1rem 2.5rem;
+        padding: 1.75rem 1.25rem;
+      }
+      .cta-section h2 {
+        font-size: 19px;
+      }
+      .cta-section p {
+        font-size: 13px;
+      }
+      .cta-btn {
+        padding: 12px 22px;
+        font-size: 13.5px;
+        width: 100%;
+        max-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body class="home-mode">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="https://trainingym.com/hs-fs/hubfs/Logo-Blanco-Trainingym.png" alt="Trainingym">
+      <button class="home-btn" onclick="goHome()" aria-label="Volver al inicio" title="Volver al inicio">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12L12 3l9 9"/>
+          <path d="M5 10v10h5v-6h4v6h5V10"/>
+        </svg>
+        <span>Inicio</span>
+      </button>
+    </div>
+    <a href="https://trainingym.com" target="_blank" rel="noopener">trainingym.com →</a>
+  </div>
+
+  <!-- Sección metodología — ocupa pantalla completa en desktop -->
+  <section class="methodology-section">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Metodología <strong>Trainingym</strong></h1>
+  </div>
+
+  <!-- Tabs de selección de palanca -->
+  <div class="palanca-tabs">
+    <button class="palanca-tab on" data-palanca="cap" onclick="zoomPalanca('cap')">
+      <span class="palanca-tab-name">Captación</span>
+    </button>
+    <button class="palanca-tab" data-palanca="tiem" onclick="zoomPalanca('tiem')">
+      <span class="palanca-tab-name">Ahorro de tiempo</span>
+    </button>
+    <button class="palanca-tab" data-palanca="fid" onclick="zoomPalanca('fid')">
+      <span class="palanca-tab-name">Fidelización</span>
+    </button>
+    <button class="palanca-tab" data-palanca="ing" onclick="zoomPalanca('ing')">
+      <span class="palanca-tab-name">Ingresos</span>
+    </button>
+  </div>
+
+  <!-- Las 4 palancas en grid lineal -->
+  <div class="palancas-row">
+    <div class="palancas-grid zoom-cap" id="palancas-grid">
+
+      <!-- ── PALANCA 1: CAPTACIÓN ── -->
+      <div class="palanca-col" id="pal-cap" data-name="Captación" onclick="onPalancaClick('cap', event)">
+        <span class="palanca-home-cta">Ver palanca →</span>
+        <div class="palanca-head">
+          <span class="palanca-head-name">Captación</span>
+        </div>
+        <div class="palanca-mini-stat">+10% Crecimiento neto</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div><div class="cap-dot-3"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="capOpenModal('posicionamiento'); event.stopPropagation();">
+                    <p class="cap-kicker">8 de 10 inscripciones vienen de tu <span class="cap-hl">posicionamiento</span>.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Antes de entrar por tu puerta, te buscan.</p>
+                    <p class="cap-desc">El posicionamiento es la nueva ubicación. Estar donde te buscan — antes que la competencia.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="capOpenModal('presencia'); event.stopPropagation();">
+                    <p class="cap-kicker">Tu <span class="cap-hl">presencia</span> lo es todo.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Tu marca vende incluso cuando tú descansas.</p>
+                    <p class="cap-desc">Redes sociales y web propia que transforman seguidores en pruebas — y pruebas en altas.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="capOpenModal('referidos'); event.stopPropagation();">
+                    <p class="cap-kicker">Los <span class="cap-hl">referidos</span> son la clave.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Tu mejor comercial ya es tu cliente.</p>
+                    <p class="cap-desc">La recomendación de alguien de confianza vale más que cualquier anuncio.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="capOpenModal('comunicacion'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Comunicación</span> efectiva.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">El mensaje correcto, en el momento exacto.</p>
+                    <p class="cap-desc">Hablarle a la persona adecuada, por el canal que usa, con lo que necesita escuchar.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Posiciona</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Muestra</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Activa referidos</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Comunica</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num">+10%</span>
+                  <span class="cap-ft-desc">Crecimiento<br>neto</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PALANCA 2: AHORRO DE TIEMPO ── -->
+      <div class="palanca-col" id="pal-tiem" data-name="Ahorro de tiempo" onclick="onPalancaClick('tiem', event)">
+        <span class="palanca-home-cta">Ver palanca →</span>
+        <div class="palanca-head">
+          <span class="palanca-head-name">Ahorro de tiempo</span>
+        </div>
+        <div class="palanca-mini-stat">Recursos optimizados</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div><div class="cap-dot-3"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="tiemOpenModal('cobros'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Cobrar</span> de forma automática.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Cuotas, tarifas y pagos recurrentes sin gestión manual.</p>
+                    <p class="cap-desc">Domiciliación recurrente en tarjeta — el estándar que maximiza retención.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="tiemOpenModal('recepcion'); event.stopPropagation();">
+                    <p class="cap-kicker">La <span class="cap-hl">recepción</span> sin colapsos.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Altas, autoservicio y control financiero en piloto automático.</p>
+                    <p class="cap-desc">Que el cliente se gestione solo — tú solo supervisas.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="tiemOpenModal('acceso'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Acceso</span> conectado al CRM.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Control de acceso conectado al pago — cero entradas sin cobrar.</p>
+                    <p class="cap-desc">La barrera filtra a quien no está al día — sin intervención humana.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="tiemOpenModal('automatizacion'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Automatizar</span> el seguimiento.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">El seguimiento que fideliza — hecho solo, sin que nadie lo recuerde.</p>
+                    <p class="cap-desc">Notificaciones, reservas, encuestas NPS y avisos funcionando solos.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Cobros</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Recepción</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Acceso</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Automatización</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num" style="font-size:14px">Equipo</span>
+                  <span class="cap-ft-desc">enfocado en<br>experiencia</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PALANCA 3: FIDELIZACIÓN ── -->
+      <div class="palanca-col" id="pal-fid" data-name="Fidelización" onclick="onPalancaClick('fid', event)">
+        <span class="palanca-home-cta">Ver palanca →</span>
+        <div class="palanca-head">
+          <span class="palanca-head-name">Fidelización</span>
+        </div>
+        <div class="palanca-mini-stat">+30% ingresos · +4 meses LTV</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="fidOpenModal('onboarding'); event.stopPropagation();">
+                    <p class="cap-kicker">La <span class="cap-hl">bienvenida</span> es tu mayor oportunidad.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Proceso de bienvenida inicial — detecta el riesgo antes de que sea tarde.</p>
+                    <p class="cap-desc">Identifica desde el primer día si el cliente formará el hábito o lo perderás.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="fidOpenModal('experiencia'); event.stopPropagation();">
+                    <p class="cap-kicker">Sin <span class="cap-hl">seguimiento</span>, se va sin avisar.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Análisis, prescripción y nutrición — personalizados y renovados en el tiempo.</p>
+                    <p class="cap-desc">La experiencia del cliente diseñada desde la primera cita con el entrenador.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="fidOpenModal('comunidad'); event.stopPropagation();">
+                    <p class="cap-kicker">La <span class="cap-hl">comunidad</span> multiplica la vida media x6.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Gamificación y comunidad — el cliente que pertenece no se va.</p>
+                    <p class="cap-desc">Puntos, premios y Gymder — conecta a tus clientes entre sí y con tu marca.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Bienvenida</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Experiencia</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Comunidad</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num">+30%</span>
+                  <span class="cap-ft-desc">ingresos ·<br>+4 meses LTV</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PALANCA 4: INGRESOS ── -->
+      <div class="palanca-col" id="pal-ing" data-name="Ingresos" onclick="onPalancaClick('ing', event)">
+        <span class="palanca-home-cta">Ver palanca →</span>
+        <div class="palanca-head">
+          <span class="palanca-head-name">Ingresos</span>
+        </div>
+        <div class="palanca-mini-stat">+40% aumento de ingresos</div>
+        <div class="palanca-body">
+          <div class="cap-embed">
+            <div class="cap-embed-inner">
+              <div class="cap-tl-wrap">
+                <div class="cap-h-line"><div class="cap-dot-2"></div></div>
+                <div class="cap-timeline">
+                  <div class="cap-item" onclick="ingOpenModal('permanencia'); event.stopPropagation();">
+                    <p class="cap-kicker">Un <span class="cap-hl">cliente que no se va</span>.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Permanencia — la palanca que aporta el 30% del incremento de ingresos.</p>
+                    <p class="cap-desc">Comunidad, bienvenida, seguimiento y tecnología — cada acción suma meses de vida media.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="ingOpenModal('upselling'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Upselling</span> — dar más valor.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Cuota básica de entrada + cuota premium — el modelo que ya funciona en otras industrias.</p>
+                    <p class="cap-desc">Del acceso básico al servicio premium — un camino natural que el cliente sube solo.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                  <div class="cap-item" onclick="ingOpenModal('crosselling'); event.stopPropagation();">
+                    <p class="cap-kicker"><span class="cap-hl">Cross-selling</span> — ingreso ya tienes.</p>
+                    <div class="cap-sep"></div>
+                    <p class="cap-headline">Nutrición, entrenamiento personal, masterclasses — fácil de comprar, alto margen.</p>
+                    <p class="cap-desc">Solo el 1-5% de tus clientes usa estos servicios. El problema no es el servicio — es el acceso.</p>
+                    <div class="cap-hint"><div class="cap-hint-line"></div><span class="cap-hint-txt">Ver más</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cap-ft">
+                <span class="cap-ft-label">Permanencia</span>
+                <span style="font-size:9px;color:#ED6845;margin-left:4px;font-weight:600">+30%</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Upselling</span>
+                <span style="font-size:9px;color:#ED6845;margin-left:4px;font-weight:600">+5%</span>
+                <span class="cap-ft-arrow">──▶</span>
+                <span class="cap-ft-label">Cross-selling</span>
+                <span style="font-size:9px;color:#ED6845;margin-left:4px;font-weight:600">+5%</span>
+                <span class="cap-ft-eq">=</span>
+                <div class="cap-ft-goal">
+                  <span class="cap-ft-num">+40%</span>
+                  <span class="cap-ft-desc">aumento de<br>ingresos</span>
+                </div>
+              </div>
+              <div class="palanca-zoom-hint">↗ Click para ver</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /palancas-grid -->
+  </div><!-- /palancas-row -->
+
+  <!-- Hint que aparece solo en home mode -->
+  <div class="home-hint">Pulsa una palanca para descubrir la metodología</div>
+  <div class="scroll-hint" onclick="document.querySelector('.cta-section').scrollIntoView({behavior:'smooth'})">
+    <span>Calcula tu inversión</span>
+    <span class="scroll-hint-arrow">↓</span>
+  </div>
+
+  </section><!-- /methodology-section -->
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>¿Quieres saber la inversión para potenciar las palancas en tu negocio?</h2>
+    <p>Calcula tu propuesta personalizada en menos de 2 minutos — sin compromiso.</p>
+    <a href="https://mirkotrain.github.io/formulario-tarifas/" class="cta-btn" target="_blank" rel="noopener">Calcular mi tarifa →</a>
+  </div>
+
+
+  <!-- ─── MODALES ─── -->
+
+  <!-- CAPTACIÓN MODAL -->
+  <div class="cap-overlay" id="cap-overlay" onclick="capOverlayClick(event)">
+    <div class="cap-modal" id="cap-modal">
+      <button class="cap-close" onclick="capCloseModal()">✕</button>
+      <div class="cap-mleft" id="cap-mleft">
+        <div class="cap-mghost" id="cap-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="cap-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="cap-mtitle"></div>
+        <p class="cap-mkicker" id="cap-mkicker"></p>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="cap-mright"></div>
+    </div>
+  </div>
+
+  <!-- AHORRO DE TIEMPO MODAL -->
+  <div class="cap-overlay" id="tiem-overlay" onclick="tiemOverlayClick(event)">
+    <div class="cap-modal">
+      <button class="cap-close" onclick="tiemCloseModal()">✕</button>
+      <div class="cap-mleft">
+        <div class="cap-mghost" id="tiem-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="tiem-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="tiem-mtitle"></div>
+        <p class="cap-mkicker" id="tiem-mkicker"></p>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="tiem-mright"></div>
+    </div>
+  </div>
+
+  <!-- FIDELIZACIÓN MODAL -->
+  <div class="cap-overlay" id="fid-overlay" onclick="fidOverlayClick(event)">
+    <div class="cap-modal">
+      <button class="cap-close" onclick="fidCloseModal()">✕</button>
+      <div class="cap-mleft">
+        <div class="cap-mghost" id="fid-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="fid-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="fid-mtitle"></div>
+        <p class="cap-mkicker" id="fid-mkicker"></p>
+        <div class="cap-stat" style="margin-top:.5rem"><span class="cap-stat-n">+30%</span><span class="cap-stat-d">de ingresos · el cliente pasa de <strong>12 a 16 meses</strong> de vida media</span></div>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="fid-mright"></div>
+    </div>
+  </div>
+
+  <!-- INGRESOS MODAL -->
+  <div class="cap-overlay" id="ing-overlay" onclick="ingOverlayClick(event)">
+    <div class="cap-modal">
+      <button class="cap-close" onclick="ingCloseModal()">✕</button>
+      <div class="cap-mleft">
+        <div class="cap-mghost" id="ing-mghost"></div>
+        <div class="cap-mtag"><div class="cap-mtag-line"></div><div class="cap-mtag-txt" id="ing-mtag-txt"></div></div>
+        <div class="cap-mtitle" id="ing-mtitle"></div>
+        <p class="cap-mkicker" id="ing-mkicker"></p>
+        <div class="cap-stat" style="margin-top:.5rem"><span class="cap-stat-n" id="ing-result-num"></span><span class="cap-stat-d" id="ing-result-desc"></span></div>
+      </div>
+      <div class="cap-mdiv"></div>
+      <div class="cap-mright" id="ing-mright"></div>
+    </div>
+  </div>
+
+  <script>
+  // ── VOLVER A LA HOME ──
+  function goHome() {
+    document.body.classList.add('home-mode');
+    // Quitar zoom y active de todas las palancas
+    const grid = document.getElementById('palancas-grid');
+    if (grid) grid.classList.remove('zoom-cap', 'zoom-tiem', 'zoom-fid', 'zoom-ing');
+    document.querySelectorAll('.palanca-col').forEach(col => col.classList.remove('active'));
+    document.querySelectorAll('.palanca-tab').forEach(t => t.classList.remove('on'));
+    // Scroll al inicio
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── ZOOM DE PALANCAS ──
+  function zoomPalanca(id) {
+    // Si estamos en home-mode, salir de él al primer click
+    if (document.body.classList.contains('home-mode')) {
+      document.body.classList.remove('home-mode');
+    }
+
+    // Actualizar tabs
+    document.querySelectorAll('.palanca-tab').forEach(t => {
+      t.classList.toggle('on', t.dataset.palanca === id);
+    });
+
+    // En móvil/tablet (≤1100px) no hay zoom — solo scroll a la palanca
+    if (window.innerWidth <= 1100) {
+      const el = document.getElementById('pal-' + id);
+      if (el) {
+        // Calcular offset para que no quede tapada por los tabs sticky
+        const tabs = document.querySelector('.palanca-tabs');
+        const tabsHeight = tabs ? tabs.offsetHeight : 0;
+        const elTop = el.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: elTop - tabsHeight - 12, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    // Desktop: aplicar zoom
+    const grid = document.getElementById('palancas-grid');
+    grid.classList.remove('zoom-cap', 'zoom-tiem', 'zoom-fid', 'zoom-ing');
+    grid.classList.add('zoom-' + id);
+    document.querySelectorAll('.palanca-col').forEach(col => col.classList.remove('active'));
+    document.getElementById('pal-' + id).classList.add('active');
+  }
+  // Click en una palanca compacta = zoom a ella
+  function onPalancaClick(id, event) {
+    // Si ya está activa, no hacer nada (el click puede haber sido en .cap-item)
+    if (document.getElementById('pal-' + id).classList.contains('active')) return;
+    zoomPalanca(id);
+  }
+
+  // ── En móvil: detectar qué palanca está visible al hacer scroll y resaltar tab ──
+  function setupMobileScrollObserver() {
+    if (window.innerWidth > 1100) return;
+    const palancaIds = ['cap', 'tiem', 'fid', 'ing'];
+    const observer = new IntersectionObserver((entries) => {
+      // Encontrar la palanca con mayor visibilidad
+      let bestId = null;
+      let bestRatio = 0;
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > bestRatio) {
+          bestRatio = entry.intersectionRatio;
+          bestId = entry.target.id.replace('pal-', '');
+        }
+      });
+      if (bestId && bestRatio > 0.3) {
+        document.querySelectorAll('.palanca-tab').forEach(t => {
+          t.classList.toggle('on', t.dataset.palanca === bestId);
+        });
+      }
+    }, { threshold: [0.3, 0.5, 0.7] });
+    palancaIds.forEach(id => {
+      const el = document.getElementById('pal-' + id);
+      if (el) observer.observe(el);
+    });
+  }
+  // Activar tras carga
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileScrollObserver);
+  } else {
+    setupMobileScrollObserver();
+  }
+  // Recalcular si rota / cambia de tamaño
+  let _resizeT = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(_resizeT);
+    _resizeT = setTimeout(setupMobileScrollObserver, 200);
+  });
+
+  // ── CAPTACIÓN MODAL DATA + FUNCTIONS ──
+  const CAP_DATA = {
+    posicionamiento: {
+      ghost: '01', tag: 'Posicionamiento',
+      title: 'Posicio-<br>na<span class="cap-hl">miento</span>',
+      kicker: 'El posicionamiento digital es la nueva ubicación de tu negocio fitness.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: '8 de cada 10 inscripciones empiezan en Google',
+          body: 'Hoy nadie entra por tu puerta sin antes <strong>buscarte en Google</strong>. La primera opción se lleva las altas — pero mantener perfiles, redes y reviews al día requiere <strong>tiempo y un equipo</strong> que no tienes.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Tu mundo digital, en un único panel',
+          points: [
+            'Web, Google Business y redes <strong>en un solo lugar</strong>',
+            '<strong>Bandeja única</strong> para responder mensajes de todas tus redes',
+            'Publica en <strong>todas tus redes a la vez</strong> con un clic',
+            'Análisis de competencia y campañas <strong>orgánicas y de pago</strong>'
+          ]
+        }
+      ]
+    },
+    presencia: {
+      ghost: '02', tag: 'Presencia de marca',
+      title: 'Pre<span class="cap-hl">sencia</span><br>de marca',
+      kicker: 'Tu marca vende incluso cuando tú descansas.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Sin web propia, pierdes altas que llegan fuera de horario',
+          body: 'Las redes son el escaparate, la web es donde el cliente decide. La mayoría no tiene una web propia que convierta — <strong>crearla cuesta caro</strong> y depende de agencias para cada cambio.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Web propia + redes en un único ecosistema',
+          points: [
+            'Crea tu <strong>web propia en minutos</strong> — sin equipo técnico',
+            'Vende online <strong>24/7 en solo 3 clics</strong>',
+            '<strong>Formularios</strong> que convierten seguidores en altas',
+            'Analítica para saber <strong>qué contenido funciona</strong>'
+          ]
+        }
+      ]
+    },
+    referidos: {
+      ghost: '03', tag: 'Sistema de referidos',
+      title: 'Refe<span class="cap-hl">ridos</span>',
+      kicker: 'Nada vende más que la confianza de alguien cercano.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Tu mejor canal de captación — sin sistema que lo active',
+          body: 'La <strong>recomendación de un cliente</strong> es la 2ª razón más fuerte para inscribirse. Pero la mayoría de centros lo activan solo en épocas malas, no premian al cliente que trae a alguien — o lo gestionan a mano.',
+          stat: true, statNum: '+200%', statDesc: '<strong>vida media del cliente</strong> entrenando acompañado · Fuente: IHRSA'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Sistema automatizado con recompensa configurable',
+          points: [
+            '<strong>Configuras puntos y premios</strong> por cada referido',
+            'El cliente invita desde la app en <strong>1 clic por WhatsApp</strong>',
+            'Cuando el invitado se inscribe, <strong>los puntos llegan solos</strong>',
+            'Funciona <strong>todos los días del año</strong> de forma autónoma'
+          ]
+        }
+      ]
+    },
+    comunicacion: {
+      ghost: '04', tag: 'Comunicación',
+      title: 'Comuni<span class="cap-hl">cación</span>',
+      kicker: 'El mensaje correcto, al cliente correcto, por el canal correcto.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Ofreces más de lo que llegas a comunicar',
+          body: 'La mayoría no tiene sistema para <strong>segmentar su base</strong> ni comunicar por varios canales a la vez. El mensaje es genérico, no habla al dolor real — y la conversión es baja.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Train Engine — marketing segmentado y multicanal',
+          points: [
+            '<strong>Segmentación avanzada</strong>: activo, potencial, excliente',
+            '<strong>Email marketing</strong> con templates y automatizaciones',
+            '<strong>Push, WhatsApp y SMS</strong> — máxima tasa de apertura',
+            '<strong>Encuestas automáticas</strong> — todo en un sitio'
+          ]
+        }
+      ]
+    }
+  };
+
+  function capOpenModal(key) {
+    const d = CAP_DATA[key];
+    document.getElementById('cap-mghost').textContent = d.ghost;
+    document.getElementById('cap-mtag-txt').textContent = d.tag;
+    document.getElementById('cap-mtitle').innerHTML = d.title;
+    document.getElementById('cap-mkicker').textContent = d.kicker;
+    const right = document.getElementById('cap-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml  = c.body   ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml  = c.stat   ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}</div>`;
+    }).join('');
+    document.getElementById('cap-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function capCloseModal() {
+    document.getElementById('cap-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function capOverlayClick(e) {
+    if (e.target === document.getElementById('cap-overlay')) capCloseModal();
+  }
+
+  // ── AHORRO DE TIEMPO MODAL DATA + FUNCTIONS ──
+  const TIEM_DATA = {
+    cobros: {
+      ghost: '01', tag: 'Gestión económica',
+      title: 'Gestión<br><span class="cap-hl">económica</span>',
+      kicker: 'El método de pago define la vida media del cliente y la salud financiera del negocio.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Cobrar a mano consume tiempo y genera pérdidas',
+          body: 'Gestionar quién paga, quién se demora y qué producto tiene cada cliente <strong>a mano es inviable</strong>. Las herramientas más comunes no permiten crear cuotas recurrentes, combinar productos, ni vender desde web — todo cae en gestión manual.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Producto, cobro y venta online en un único sistema',
+          points: [
+            'Cuotas <strong>recurrentes</strong>, bonos, matrículas y combinaciones',
+            '<strong>Pasarela de pagos conectada</strong> que cobra de forma automática',
+            'Contratación desde <strong>web 24/7</strong> en pocos clics',
+            'Control en tiempo real de <strong>quién paga, quién se demora</strong>'
+          ]
+        }
+      ]
+    },
+    recepcion: {
+      ghost: '02', tag: 'Recepción automatizada',
+      title: 'Auto<span class="cap-hl">matiza</span><br>recepción',
+      kicker: 'La recepción desbordada es tiempo perdido y mala experiencia para todos.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'En épocas de cobro, la recepción se colapsa',
+          body: 'El staff dedica horas a tareas administrativas que <strong>podrían automatizarse</strong>. La recepción se colapsa, la atención cae, y los datos financieros llegan tarde — mientras el cliente espera para cualquier gestión.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Autoservicio + kiosco digital + control financiero',
+          points: [
+            'Altas y contratación desde <strong>web o pantalla de autoservicio</strong>',
+            'Compra de producto mediante <strong>código QR</strong>',
+            'Dashboard financiero: cobros, pendientes, <strong>por tipo de producto</strong>',
+            'El staff se libera para <strong>crear experiencia</strong>, no procesar pagos'
+          ]
+        }
+      ]
+    },
+    acceso: {
+      ghost: '03', tag: 'Control de acceso',
+      title: 'Control<br>de <span class="cap-hl">acceso</span>',
+      kicker: 'Cada cliente que entra sin pagar es dinero que pierdes — y no lo estás contando.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Sin sistema conectado, hay clientes que entran sin pagar',
+          body: 'Cuando el staff valida manualmente, <strong>falla</strong>. Y sin integración entre acceso y cobros, los modelos 24/7 son imposibles. Tampoco sabes con qué frecuencia viene cada cliente — datos clave para fidelizar.',
+          stat: true, statNum: '15-20', statDesc: '<strong>clientes al mes</strong> entran gratis en un gimnasio de 500 usuarios activos — más de <strong>10.000 € perdidos al año</strong>'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Acceso integrado con cobros y CRM',
+          points: [
+            'Tornos, barreras o puertas con <strong>reconocimiento facial o QR</strong>',
+            '<strong>Filtra automáticamente</strong> a quien tiene pagos pendientes',
+            'Compatible con modelos <strong>24/7 desatendidos</strong>',
+            'Datos de <strong>frecuencia y hábitos</strong> de cada cliente'
+          ]
+        }
+      ]
+    },
+    automatizacion: {
+      ghost: '04', tag: 'Notificaciones y reservas',
+      title: '<span class="cap-hl">Notificaciones</span><br>encuestas<br>y reservas',
+      kicker: 'El seguimiento que fideliza es el que ocurre sin que nadie tenga que recordarlo.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Sin sistema, el seguimiento depende de la memoria del equipo',
+          body: 'Reservar clases por WhatsApp, olvidar avisos de renovación, no enviar encuestas NPS, no felicitar cumpleaños... son acciones que <strong>marcan la fidelización</strong> pero no se hacen porque requieren tiempo que no existe.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Train Engine — automatización del ciclo de vida del cliente',
+          points: [
+            'Notificaciones automáticas: <strong>días sin asistir, renovaciones, cumpleaños</strong>',
+            'Sistema de <strong>reservas</strong> en app, web o cualquier página',
+            'Validación automática de <strong>asistentes a clases</strong>',
+            '<strong>Encuesta NPS automática</strong> y rentabilidad por actividad'
+          ]
+        }
+      ]
+    }
+  };
+
+  function tiemOpenModal(key) {
+    const d = TIEM_DATA[key];
+    document.getElementById('tiem-mghost').textContent = d.ghost;
+    document.getElementById('tiem-mtag-txt').textContent = d.tag;
+    document.getElementById('tiem-mtitle').innerHTML = d.title;
+    document.getElementById('tiem-mkicker').textContent = d.kicker;
+    const right = document.getElementById('tiem-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml   = c.body   ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml   = c.stat   ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}</div>`;
+    }).join('');
+    document.getElementById('tiem-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function tiemCloseModal() {
+    document.getElementById('tiem-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function tiemOverlayClick(e) {
+    if (e.target === document.getElementById('tiem-overlay')) tiemCloseModal();
+  }
+
+  // ── FIDELIZACIÓN MODAL DATA + FUNCTIONS ──
+  const FID_DATA = {
+    onboarding: {
+      ghost: '01', tag: 'Proceso de bienvenida',
+      title: 'Proceso de<br><span class="cap-hl">bienvenida</span>',
+      kicker: 'El hábito es el único indicador que determina si un cliente se queda o se va.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'El 80% de los abandonos ocurre en los primeros 3 meses',
+          body: 'En un negocio recurrente, <strong>aumentar la vida media es aumentar los ingresos</strong>. Pero la mayoría de centros no tienen un proceso de bienvenida estandarizado: todos los clientes reciben el mismo trato, y los primeros 3 meses — los más críticos — pasan sin seguimiento.',
+          stat: true, statNum: '80%', statDesc: '<strong>de los abandonos</strong> ocurre durante los primeros 3 meses de vida del cliente'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Asistente virtual que detecta el riesgo y crea seguimiento',
+          points: [
+            '<strong>Asistente virtual de bienvenida</strong> que guía al cliente desde el primer momento',
+            'Identifica automáticamente el <strong>riesgo de abandono</strong> con preguntas simples',
+            'Si hay riesgo: agenda cita en la app y el entrenador recibe al cliente <strong>ya guiado</strong>',
+            'Si no: da <strong>autonomía total desde la app</strong> — el staff se centra donde más impacta'
+          ]
+        }
+      ]
+    },
+    experiencia: {
+      ghost: '02', tag: 'Experiencia y seguimiento',
+      title: 'Expe<span class="cap-hl">riencia</span><br>y seguimiento',
+      kicker: 'La primera cita con el entrenador es el momento más importante — y el más desaprovechado.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Sin protocolo, cada entrenador lo hace a su manera',
+          body: 'Solo una pequeña parte de los clientes pasa por un análisis real. Los planes son estándar, las herramientas rudimentarias — papel, plantillas genéricas — y <strong>no se renuevan en el tiempo</strong>. El cliente se estanca y abandona.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Citas, prescripción, bioimpedancia y nutrición en una plataforma',
+          points: [
+            '<strong>Gestor de citas automatizado</strong> — el cliente reserva desde la app',
+            'Prescripción con <strong>plantillas personalizadas</strong> y autoasignación',
+            'Integración con <strong>básculas de bioimpedancia</strong> y autopesaje autónomo',
+            '<strong>Servicio de dietas automatizado</strong> — alineado con sus objetivos'
+          ]
+        }
+      ]
+    },
+    comunidad: {
+      ghost: '03', tag: 'Comunidad y premios',
+      title: 'Comuni<span class="cap-hl">dad</span><br>y premios',
+      kicker: 'Un cliente que pertenece a una comunidad multiplica por 6 su vida media.',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Retos puntuales — y ninguna estrategia real de comunidad',
+          body: 'La mayoría de centros activan premios solo en épocas puntuales, premian solo a nuevos clientes (lo que <strong>genera conflicto con los antiguos</strong>) y no crean comunidad real. El cliente entrena y se va — sin vínculo con nadie.',
+          stat: true, statNum: 'x6', statDesc: '<strong>vida media del cliente</strong> cuando pertenece a una comunidad activa'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Gamificación + Gymder — la comunidad que retiene',
+          points: [
+            '<strong>Gamificación continua</strong>: premia asistencia, feedback y permanencia',
+            '<strong>Puntos canjeables desde la app</strong> por premios del centro',
+            '<strong>Gymder</strong>: conecta clientes por aficiones e intereses',
+            'Crea imagen de marca y comunidad que <strong>capta nuevos clientes</strong>'
+          ]
+        }
+      ]
+    }
+  };
+
+  function fidOpenModal(key) {
+    const d = FID_DATA[key];
+    document.getElementById('fid-mghost').textContent = d.ghost;
+    document.getElementById('fid-mtag-txt').textContent = d.tag;
+    document.getElementById('fid-mtitle').innerHTML = d.title;
+    document.getElementById('fid-mkicker').textContent = d.kicker;
+    const right = document.getElementById('fid-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml   = c.body   ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml   = c.stat   ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}</div>`;
+    }).join('');
+    document.getElementById('fid-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fidCloseModal() {
+    document.getElementById('fid-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function fidOverlayClick(e) {
+    if (e.target === document.getElementById('fid-overlay')) fidCloseModal();
+  }
+
+  // ── INGRESOS MODAL DATA + FUNCTIONS ──
+  const ING_DATA = {
+    permanencia: {
+      ghost: '01', tag: 'Permanencia',
+      title: 'Perma<span class="cap-hl">nencia</span>',
+      kicker: 'Subir la cuota genera bajas. Aumentar la vida media genera ingresos sin ruido.',
+      resultNum: '+30%', resultDesc: 'de ingresos generado por <strong>mayor permanencia del cliente</strong>',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Subir la cuota genera bajas — la permanencia, ingresos sin ruido',
+          body: 'En un negocio recurrente, cada mes adicional de vida media es <strong>ingreso puro sin coste de captación</strong>. Pero la mayoría de centros no ven la conexión entre comunidad, bienvenida personalizada y tecnología — y desaprovechan la palanca más poderosa.',
+          statsGrid: [
+            { num: 'x6', desc: '<strong>vida media</strong> entrenando con un amigo' },
+            { num: '+160%', desc: 'con +2 interacciones <strong>staff/mes</strong>' },
+            { num: '+400%', desc: 'con servicio de <strong>composición corporal</strong>' },
+            { num: '+200%', desc: 'con <strong>NPS superior a 75</strong>' }
+          ]
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Un ecosistema completo que activa todas las palancas',
+          points: [
+            '<strong>Referidos y comunidad</strong> que premian entrenar acompañado',
+            '<strong>Bienvenida segmentada</strong> por perfil de riesgo',
+            '<strong>Bioimpedancia, autopesaje</strong> y conexión con maquinaria',
+            '<strong>KPIs de negocio</strong> para actuar con estrategia'
+          ]
+        }
+      ]
+    },
+    upselling: {
+      ghost: '02', tag: 'Upselling',
+      title: 'Up<span class="cap-hl">selling</span>',
+      kicker: 'Del acceso básico al servicio premium — un camino natural que el cliente recorre solo.',
+      resultNum: '+5%', resultDesc: 'de ingresos adicionales con una <strong>estrategia de upselling bien activada</strong>',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Tarifa plana para todos — sin camino de upselling posible',
+          body: 'La industria aérea lleva décadas con tarifa básica + niveles superiores. Pero los negocios fitness no tienen sistema para diferenciar tarifas por niveles, ni metodología para estructurar su oferta — el cliente no tiene un camino para subir.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Configuración de producto + web optimizada para vender más',
+          points: [
+            '<strong>Productos por perfil</strong> — cada tarifa según lo que el cliente ya tiene',
+            'Web <strong>optimizada para el upselling</strong> — guía a la opción de más valor',
+            '<strong>Campañas de marketing</strong> dirigidas a clientes actuales',
+            'Acción de upselling sobre la <strong>base de clientes existente</strong>'
+          ]
+        }
+      ]
+    },
+    crosselling: {
+      ghost: '03', tag: 'Cross-selling',
+      title: 'Cross-<span class="cap-hl">selling</span>',
+      kicker: 'Solo el 1-5% de tus clientes usa los servicios extra. El problema no es el servicio — es el acceso.',
+      resultNum: '+5%', resultDesc: 'de ingresos adicionales con servicios complementarios <strong>fáciles de comprar</strong>',
+      chapters: [
+        {
+          label: 'El reto del centro',
+          title: 'Servicios infrautilizados que nadie compra porque nadie los encuentra',
+          body: 'Nutrición la usa el <strong>5% de los clientes</strong>. Entrenamiento personal, el <strong>1%</strong>. El círculo vicioso: los servicios no son fáciles de comprar, el uso es bajo, no se invierte en comunicarlos — y siguen siendo invisibles.'
+        },
+        {
+          label: 'Cómo lo resuelve Trainingym', tg: true,
+          title: 'Crea, vende y comunica tus servicios extra desde una plataforma',
+          points: [
+            'Sistema de nutrición <strong>monetizable desde la app</strong>',
+            '<strong>Free trials</strong> para activar el primer uso',
+            'Herramientas para <strong>publicitar y comunicar</strong> los servicios extra',
+            '<strong>Feedback de clientes</strong> para mejorar cada servicio'
+          ]
+        }
+      ]
+    }
+  };
+
+  function ingOpenModal(key) {
+    const d = ING_DATA[key];
+    document.getElementById('ing-mghost').textContent = d.ghost;
+    document.getElementById('ing-mtag-txt').textContent = d.tag;
+    document.getElementById('ing-mtitle').innerHTML = d.title;
+    document.getElementById('ing-mkicker').textContent = d.kicker;
+    document.getElementById('ing-result-num').textContent = d.resultNum;
+    document.getElementById('ing-result-desc').innerHTML = d.resultDesc;
+    const right = document.getElementById('ing-mright');
+    right.scrollTop = 0;
+    right.innerHTML = d.chapters.map(c => {
+      const bodyHtml   = c.body       ? `<p class="cap-ch-body">${c.body}</p>` : '';
+      const bulletHtml = c.points     ? `<ul class="cap-ch-bullets">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>` : '';
+      const statHtml   = c.stat       ? `<div class="cap-stat"><span class="cap-stat-n">${c.statNum}</span><span class="cap-stat-d">${c.statDesc}</span></div>` : '';
+      const gridHtml   = c.statsGrid  ? `<div class="ing-stats-grid">${c.statsGrid.map(s=>`<div class="ing-stat-item"><span class="ing-stat-num">${s.num}</span><span class="ing-stat-desc">${s.desc}</span></div>`).join('')}</div>` : '';
+      return `<div class="cap-chapter${c.tg?' cap-tg':''}"><span class="cap-ch-label">${c.label}</span><p class="cap-ch-title">${c.title}</p>${bodyHtml}${bulletHtml}${statHtml}${gridHtml}</div>`;
+    }).join('');
+    document.getElementById('ing-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function ingCloseModal() {
+    document.getElementById('ing-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function ingOverlayClick(e) {
+    if (e.target === document.getElementById('ing-overlay')) ingCloseModal();
+  }
+
+  // Cerrar modales con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      ['cap','tiem','fid','ing'].forEach(p => {
+        const ov = document.getElementById(p + '-overlay');
+        if (ov && ov.classList.contains('open')) {
+          window[p + 'CloseModal']();
+        }
+      });
+    }
+  });
+  </script>
+
+</body>
+</html>
